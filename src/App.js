@@ -1,24 +1,32 @@
-import logo from './logo.svg';
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+
+//COMPONENTS
+import NavBar from "./Components/NavBar" ;
+
+//PAGES
+import Home from "./Pages/home"
+import Validate from "./Pages/validate"
+
+//CSS
+import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css';
+
+//REACT MAGIC
+
+/* RANDOM NOTES
+<footer class="bg-light"></footer> */
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <NavBar/>
+      <div className='m-4'>
+        <Routes>
+          <Route path="/" element={<Home/>} />
+          <Route path="/Validation" element={<Validate/>} />
+        </Routes>
+      </div>
+      </BrowserRouter>
   );
 }
 
