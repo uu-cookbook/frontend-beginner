@@ -17,7 +17,7 @@ function ModalWindow(proms) {
       <Nav.Link onClick={handleShow}>{proms.buttonname}</Nav.Link>
 
       <Modal
-        size="lg"
+        size="xl"
         show={show}
         onHide={handleClose}
         backdrop="static"

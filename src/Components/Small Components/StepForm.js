@@ -9,13 +9,11 @@ import Icon from "@mdi/react";
 import { mdiDeleteForever } from "@mdi/js";
 
 import { useState } from "react";
-//import { useId } from "react";
 let id = 0
-let ISdeteletd=false
 
 function StepFrom() {
   //Step logic
-  const [Stepts, addStep] = useState([{ componentId: 13, content: "helooo psychopath" }]);
+  const [Stepts, addStep] = useState([]);
   
   console.log(Stepts);
   
@@ -41,11 +39,10 @@ function StepFrom() {
   }
 
   function ChangeStepContent(componentId, content) {
-    ISdeteletd=true
     console.log(content)
     const index = Stepts.findIndex((obj) => obj.componentId === componentId);
     Stepts[index].content = content;
-    addStep(Stepts);
+    addStep([...Stepts]);
     console.log(Stepts);
   }
 
@@ -56,17 +53,15 @@ function StepFrom() {
         return (
           <div class="mb-2">
             <InputGroup>
-              <InputGroup.Text>Step {index}.</InputGroup.Text>
+              <InputGroup.Text>Step {index+1}.</InputGroup.Text>
               <Form.Control
                 as="textarea"
+                value={element.content}
+
                 onChange={(e) => {
                   ChangeStepContent(element.componentId, e.target.value);
                 }}
-                value={()=>{
-                    if(ISdeteletd){ 
-                        ISdeteletd=false 
-                        return element.content
-                    }}}
+                
                 rows={2}
               />
               <DropdownButton
@@ -91,9 +86,11 @@ function StepFrom() {
           </div>
         );
       })}
+      <div className="d-grid mt-3 mb-3">
       <Button variant="secondary" onClick={ClickAddStep}>
-              + add antother step
+              + add {Stepts.length>0 && "antother" } step
             </Button>
+            </div>
     </div>
   );
 }

@@ -1,6 +1,5 @@
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
-import Button from "react-bootstrap/Button";
 //import Dropdown from "react-bootstrap/Dropdown";
 //import DropdownButton from "react-bootstrap/DropdownButton";
 import Row from "react-bootstrap/Row";
@@ -12,26 +11,16 @@ import "../App.css";
 import "bootstrap/dist/css/bootstrap.css";
 
 //REACT MAGIC
-import { useState } from "react";
-//import { useId } from 'react';
 
 //REACT SELECT (LIBRARY)
-import CreatableSelect from "react-select/creatable";
 import Select from "react-select"
 
 //SMALL COMPONENTS
 import StepFrom from "./Small Components/StepForm";
+import IngredientForm from "./Small Components/IngredientForm";
 
 function RecipieForm() {
   
-
-
-  //Ingredien select content
-  const SelectOptions = [
-    { name: "Vejce", id: 1, unit: "ks" },
-    { name: "Mleko", id: 2, unit: "ml" },
-    { name: "Sul", id: 3, unit: "g" },
-  ];
 
   //Tag select content
   const CategoryOptions = [
@@ -41,27 +30,6 @@ function RecipieForm() {
     { value: 3, label: "Sweet", color: "#666666" },
   ];
 
-  //Ingredient Select
-
-  function IngredientUpdate(formId, e) {
-    if (e === null) {
-      return setIngredient([]);
-    }
-
-    setIngredient((ArrayOfObjects) => {
-      const index = ArrayOfObjects.findIndex((obj) => obj.formId === formId);
-      ArrayOfObjects[index].id = e.id;
-      ArrayOfObjects[index].unit = e.unit;
-      console.log(ArrayOfObjects);
-      return ArrayOfObjects;
-    });
-  }
-
-  //FORM VALUES
-  const [Ingredients, setIngredient] = useState([
-    { formId: 1, id: 0, unit: "", howMutch: 30 },
-    { formId: 2, id: 3, unit: "", howMutch: 20 },
-  ]);
 
   function HandleSubmit(e) {
     e.preventDefault();
@@ -128,50 +96,9 @@ function RecipieForm() {
           </div>
         </Col>
         <Col>
-          <Form.Label>Ingredients</Form.Label>
-
-          {Ingredients.map((element) => {
-            return (
-              <InputGroup className="mb-3">
-                <CreatableSelect
-                  isClearable
-                  options={SelectOptions}
-                  placeholder="Enter ingredien"
-                  onChange={(e) => IngredientUpdate(element.formId, e)}
-                  onCreateOption={() => 0}
-                  getOptionLabel={(option) => option.name}
-                  getOptionValue={(option) => option.id}
-                />
-                <Form.Control
-                  aria-label="Last name"
-                  placeholder="Enter quantity"
-                  type="number"
-                  min="1"
-                />
-                <InputGroup.Text>{element.unit}</InputGroup.Text>
-              </InputGroup>
-            );
-          })}
-
-          <InputGroup className="mb-3">
-            <CreatableSelect
-              isClearable
-              options={SelectOptions}
-              placeholder="Enter ingredien"
-              onChange={() => IngredientUpdate()}
-              onCreateOption={() => "handleCreateIngredient"}
-            />
-            <Form.Control
-              aria-label="Last name"
-              placeholder="Enter quantity"
-              type="number"
-              min="1"
-            />
-            <InputGroup.Text>ml</InputGroup.Text>
-          </InputGroup>
-          <div className="d-grid mt-3 mb-3">
-            <Button variant="secondary">+ add antother ingredient</Button>
-          </div>
+        
+        <IngredientForm />
+          
         </Col>
       </Row>
     </Form>
