@@ -49,6 +49,7 @@ function RecipieForm() {
         backgroundColor: state.isSelected ? "blue" : "#fff",
         boxShadow: state.isFocused ? "0px 0px 0px 0.25rem #0d6efd40" : "none",
         border: state.isFocused ? "1px solid #86b7fe" : "1px solid #ced4da" ,
+        transition: "border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out"
       }),
     }
 
