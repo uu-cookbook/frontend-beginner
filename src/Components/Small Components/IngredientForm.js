@@ -28,7 +28,7 @@ let basticOptions = [
 ];
 
 
-
+let IsIngredientCreated=false
 
 function IngredientForm() {
 
@@ -60,12 +60,14 @@ function IngredientForm() {
     //CHANGE INGREDIENT NAME
     function changeIngredientName(componentId, e){
       const index = Ingredients.findIndex((obj) => obj.componentId === componentId);
-      
+      console.log("input",e)
+
       if (e === null) {
         Ingredients[index].id = NaN;
         Ingredients[index].unit = "...";
-        console.log(Ingredients)
-        return setIngredient([...Ingredients]);
+        Ingredients[index].name = "";
+
+        return (setIngredient([...Ingredients]));
       }
 
       setIngredient(() => {
@@ -83,8 +85,9 @@ function IngredientForm() {
       const createdOption = { name: text , id: 0, unit: "none" , approved: false}
       setSelectOptions([...SelectOptions, createdOption])
       
-      
+      IsIngredientCreated=true
       changeIngredientName(componentId, createdOption)
+      console.log(Ingredients);
     }
 
     
@@ -116,7 +119,7 @@ function IngredientForm() {
       console.log(Ingredients)
     }
 
-
+    console.log(Ingredients)
   return (
     <div>
     <Form.Label>Ingredients</Form.Label>
@@ -129,11 +132,11 @@ function IngredientForm() {
               <CreatableSelect isClearable
                 backspaceRemovesValue={true}
                 options={SelectOptions}
-                onChange={(e)=>changeIngredientName(element.componentId,e)}
                 onCreateOption={(text) => CreateOption(element.componentId, text)}
+                onChange={(e)=>changeIngredientName(element.componentId,e)}
                 getOptionLabel={(option) => option.name}
                 getOptionValue={(option) => option.id}
-                defaultValue={ ()=>{if(element.name==""){return}else{return element}}}
+                value={element.name==""?null:element}
                 styles={customStyles}
               />
               
