@@ -27,13 +27,33 @@ let basticOptions = [
   { name: "Sul", id: 3, unit: "g" , approved: true},
 ];
 
+
+
+
 function IngredientForm() {
+
+  const customStyles = {
+    control: (base, state) => ({
+        //border: "1px solid #ced4da",
+        borderRadius: ".375rem",
+        display: 'flex',
+
+        //color: "#212529",
+        //borderColor: "#86b7fe",
+        outline: 0,
+        
+        backgroundColor: state.isSelected ? "blue" : "#fff",
+        boxShadow: state.isFocused ? "0px 0px 0px 0.25rem #0d6efd40" : "none",
+        border: state.isFocused ? "1px solid #86b7fe" : "1px solid #ced4da" ,
+        transition: "border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out" ,
+      }),
+    }
     
     //
     // INGREDIENT FILE
     //
 
-    const [Ingredients, setIngredient] = useState([]);
+    const [Ingredients, setIngredient] = useState([{ componentId: "genID", name: "heloo", id: "5", unit: "..."}]);
     const [SelectOptions, setSelectOptions] = useState(basticOptions)
     
 
@@ -107,12 +127,14 @@ function IngredientForm() {
             <Col>
             
               <CreatableSelect isClearable
+                backspaceRemovesValue={true}
                 options={SelectOptions}
                 onChange={(e)=>changeIngredientName(element.componentId,e)}
                 onCreateOption={(text) => CreateOption(element.componentId, text)}
                 getOptionLabel={(option) => option.name}
                 getOptionValue={(option) => option.id}
-                Value={element.name}
+                defaultValue={ ()=>{if(element.name==""){return}else{return element}}}
+                styles={customStyles}
               />
               
             </Col>
@@ -162,3 +184,8 @@ function IngredientForm() {
 )}
 
 export default IngredientForm;
+
+// "&:hover": {
+//   border: "1px solid #ff8b67",
+//   boxShadow: "0px 0px 6px #ff8b67"
+// }
