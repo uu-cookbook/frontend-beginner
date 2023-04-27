@@ -3,6 +3,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Form from "react-bootstrap/Form";
 import Badge from "react-bootstrap/Badge";
+import Logo from "./Small Components/Logo";
 
 // Router
 import { NavLink } from "react-router-dom";
@@ -16,8 +17,10 @@ function NavBar() {
       <div>
         <Navbar bg="light" variant="light">
           <Container>
-            <Navbar.Brand as={NavLink} to="/">
-              CokieCorn
+            <Navbar.Brand as={NavLink} to="/" className="d-flex flex-row">
+              <Container className="px-4">
+                <Logo /> <span style={{marginLeft: "10px"}}>CookiCorn</span>
+              </Container>
             </Navbar.Brand>
             <Nav className="me-auto">
               <Nav.Link as={NavLink} to="/">
@@ -28,7 +31,7 @@ function NavBar() {
               </Nav.Link>
               <ModalWindow buttonname="Create Recipie" />
             </Nav>
-            <Nav>
+            {/* <Nav>
               <Form className="d-flex">
                 <Form.Control
                   type="search"
@@ -37,7 +40,7 @@ function NavBar() {
                   aria-label="Search"
                 />
               </Form>
-            </Nav>
+            </Nav> */}
           </Container>
         </Navbar>
       </div>
