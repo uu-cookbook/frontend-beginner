@@ -4,20 +4,20 @@ import Col from 'react-bootstrap/Col';
 import { Form } from "react-bootstrap";
 import Select from "react-select"
 import RecipeCard from "./RecipeCard";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 function RecipeList({recipes}) {
-  let currentSearch = "";
-  let currentSort = "";
-  let currentCategoryFilters = [];
-
+  let currentSearch = useRef("");
+  let currentSort = useRef("");
+  let currentCategoryFilters = useRef([]);
+  
   const [searchedRecipes, setSearchedRecipes] = useState(recipes);
 
   const handleSearch = (e) => {
     /*const newRecipes = recipes.filter(recipe => recipe.name.toLowerCase().includes(e.target.value.toLowerCase()));
     setSearchedRecipes(newRecipes);*/
 
-    currentSearch = e.target.value.toLowerCase();
+    currentSearch.current = e.target.value.toLowerCase();
     updateSearch();
   }
 
@@ -65,7 +65,7 @@ function RecipeList({recipes}) {
         break;
     }*/
 
-    currentSort = e.target.value;
+    currentSort.current = e.target.value;
     updateSearch();
   }
 
@@ -91,7 +91,7 @@ function RecipeList({recipes}) {
 
     setSearchedRecipes([...results]);*/
 
-    currentCategoryFilters = [...e];
+    currentCategoryFilters.current = [...e];
     updateSearch();
   }
 
@@ -101,18 +101,18 @@ function RecipeList({recipes}) {
     console.log("Current category filters:");
     console.log(currentCategoryFilters); */
 
-    let newRecipes = recipes;
-
     // FILTER BY TEXT SEARCH
-    newRecipes = newRecipes.filter(recipe => recipe.name.toLowerCase().includes(currentSearch.toLowerCase()));
+    let newRecipes = recipes.filter(recipe => recipe.name.toLowerCase().includes(currentSearch.current.toLowerCase()));
+    /* console.log("Searched:");
+    console.log(newRecipes); */
     
     // FILTER BY CATEGORIES
     newRecipes = newRecipes.filter(recipe => {
-      for (let i = 0; i < currentCategoryFilters.length; i++) {
+      for (let i = 0; i < currentCategoryFilters.current.length; i++) {
         let hasCurrentCategory = false;
 
         for (let x = 0; x < recipe.categories.length; x++) {
-          if (recipe.categories[x] === currentCategoryFilters[i].value) {
+          if (recipe.categories[x] === currentCategoryFilters.current[i].value) {
             hasCurrentCategory = true;
             break;
           }
@@ -123,9 +123,11 @@ function RecipeList({recipes}) {
       }
       return true;
     });
+    /* console.log("Filtered:");
+    console.log(newRecipes); */
 
     // SORT
-    switch (currentSort) {
+    switch (currentSort.current) {
       case "newest":
         newRecipes = newRecipes.sort(function(a, b) {
           return (b.dateUploaded - a.dateUploaded);
@@ -159,6 +161,9 @@ function RecipeList({recipes}) {
       default:
         break;
     }
+    /* console.log("Sorted:");
+    console.log(newRecipes);
+    console.log("----------------------------"); */
     
     setSearchedRecipes([...newRecipes]);
   }
