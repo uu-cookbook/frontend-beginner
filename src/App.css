@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@700&display=swap');
+
+/* .CreatableSelect:focus{
+  border: #a3c4bc;
+  box-shadow:  0 0 0 0.1rem #8ebdb1 ;
+  background-color: transparent;
+} */
+
+.navbar-brand {
+  font-family: 'Baloo Bhaijaan 2',
+  cursive;
+  font-weight: 700;
+}
+
+.dropdown-toggle::after {
+  display: none !important; 
+}
