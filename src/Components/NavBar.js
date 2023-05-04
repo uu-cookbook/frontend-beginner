@@ -1,7 +1,6 @@
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import Form from "react-bootstrap/Form";
 import Badge from "react-bootstrap/Badge";
 import Logo from "./Small Components/Logo";
 
@@ -19,7 +18,7 @@ function NavBar() {
           <Container>
             <Navbar.Brand as={NavLink} to="/" className="d-flex flex-row">
               <Container className="px-4">
-                <Logo /> <span style={{marginLeft: "10px"}}>CookiCorn</span>
+                <Logo /> <span style={{ marginLeft: "10px" }}>CookiCorn</span>
               </Container>
             </Navbar.Brand>
             <Nav className="me-auto">
@@ -29,7 +28,7 @@ function NavBar() {
               <Nav.Link as={NavLink} to="/validation">
                 Validate <Badge bg="danger">2</Badge>{" "}
               </Nav.Link>
-              <ModalWindow buttonname="Create Recipie" />
+              <ModalWindow buttonname="Create Recipe" />
             </Nav>
             {/* <Nav>
               <Form className="d-flex">

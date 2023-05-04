@@ -1,5 +1,3 @@
-import Card from "react-bootstrap/Card";
-import Container from "react-bootstrap/Container";
 import RecipeList from "../Components/RecipeList";
 
 // PLACEHOLDER IMAGES
@@ -21,7 +19,8 @@ function Home() {
       steps: 6,
       prepTime: 25,
       dateUploaded: new Date(2021, 7, 5),
-      photo: VegetableStirFry
+      photo: VegetableStirFry,
+      categories: [1, 2, 4]
     },
     {
       name: "Grilled Cheese Sandwich",
@@ -29,7 +28,8 @@ function Home() {
       steps: 3,
       prepTime: 10,
       dateUploaded: new Date(2021, 8, 15),
-      photo: GrilledCheeseSandwich
+      photo: GrilledCheeseSandwich,
+      categories: [4]
     },
     {
       name: "Beef Stew",
@@ -37,7 +37,8 @@ function Home() {
       steps: 9,
       prepTime: 120,
       dateUploaded: new Date(2021, 9, 28),
-      photo: BeefStew
+      photo: BeefStew,
+      categories: [5]
     },
     {
       name: "Chicken Curry",
@@ -45,7 +46,8 @@ function Home() {
       steps: 8,
       prepTime: 45,
       dateUploaded: new Date(2021, 11, 3),
-      photo: ChickenCurry
+      photo: ChickenCurry,
+      categories: [2, 5]
     },
     {
       name: "Spaghetti Carbonara",
@@ -53,7 +55,8 @@ function Home() {
       steps: 6,
       prepTime: 30,
       dateUploaded: new Date(2022, 0, 12),
-      photo: SpaghettiCarbonara
+      photo: SpaghettiCarbonara,
+      categories: [2, 4, 5]
     },
     {
       name: "Baked Salmon",
@@ -61,7 +64,8 @@ function Home() {
       steps: 5,
       prepTime: 25,
       dateUploaded: new Date(2022, 1, 20),
-      photo: BakedSalmon
+      photo: BakedSalmon,
+      categories: [2, 5]
     },
     {
       name: "Pesto Pasta",
@@ -69,7 +73,8 @@ function Home() {
       steps: 4,
       prepTime: 20,
       dateUploaded: new Date(2022, 2, 8),
-      photo: PestoPasta
+      photo: PestoPasta,
+      categories: [1, 2, 4]
     },
     {
       name: "Taco Salad",
@@ -77,7 +82,8 @@ function Home() {
       steps: 7,
       prepTime: 35,
       dateUploaded: new Date(2022, 3, 1),
-      photo: TacoSalad
+      photo: TacoSalad,
+      categories: [2, 4, 5]
     },
     {
       name: "Oven-Baked Chicken",
@@ -85,7 +91,8 @@ function Home() {
       steps: 4,
       prepTime: 35,
       dateUploaded: new Date(2022, 4, 12),
-      photo: OvenBakedChicken
+      photo: OvenBakedChicken,
+      categories: [4, 5]
     }
   ];
 
