@@ -29,7 +29,7 @@ function NavBar() {
               <Nav.Link as={NavLink} to="/validation">
                 Validate <Badge bg="danger">2</Badge>{" "}
               </Nav.Link>
-              <ModalWindow buttonname="Create Recipie" />
+              <ModalWindow buttonname="Create Recipe" />
             </Nav>
             {/* <Nav>
               <Form className="d-flex">

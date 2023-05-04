@@ -27,9 +27,6 @@ let basticOptions = [
   { name: "Sul", id: 3, unit: "g" , approved: true},
 ];
 
-
-let IsIngredientCreated=false
-
 function IngredientForm() {
 
   const customStyles = {
@@ -85,7 +82,6 @@ function IngredientForm() {
       const createdOption = { name: text , id: 0, unit: "none" , approved: false}
       setSelectOptions([...SelectOptions, createdOption])
       
-      IsIngredientCreated=true
       changeIngredientName(componentId, createdOption)
       console.log(Ingredients);
     }
@@ -136,7 +132,7 @@ function IngredientForm() {
                 onChange={(e)=>changeIngredientName(element.componentId,e)}
                 getOptionLabel={(option) => option.name}
                 getOptionValue={(option) => option.id}
-                value={element.name==""?null:element}
+                value={element.name===""?null:element}
                 styles={customStyles}
               />
               
