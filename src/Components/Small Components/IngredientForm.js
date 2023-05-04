@@ -53,7 +53,7 @@ function IngredientForm() {
     // INGREDIENT FILE
     //
 
-    const [Ingredients, setIngredient] = useState([{ componentId: "genID", name: "heloo", id: "5", unit: "..."}]);
+    const [Ingredients, setIngredient] = useState([]);
     const [SelectOptions, setSelectOptions] = useState(basticOptions)
     
 
@@ -138,6 +138,7 @@ function IngredientForm() {
                 getOptionValue={(option) => option.id}
                 value={element.name==""?null:element}
                 styles={customStyles}
+                require
               />
               
             </Col>
@@ -149,6 +150,7 @@ function IngredientForm() {
                   type="number"
                   onChange={(e)=>AmountUpdate(element.componentId,e.target.value)}
                   value={element.value}
+                  required
                 />
 
                 <InputGroup.Text>{element.unit}</InputGroup.Text>

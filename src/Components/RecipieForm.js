@@ -11,6 +11,7 @@ import "../App.css";
 import "bootstrap/dist/css/bootstrap.css";
 
 //REACT MAGIC
+import { useState } from "react";
 
 //REACT SELECT (LIBRARY)
 import Select from "react-select"
@@ -31,10 +32,23 @@ function RecipieForm() {
   ];
 
 
-  function HandleSubmit(e) {
-    e.preventDefault();
-    console.log("HELOO");
-  }
+  const [validated, setValidated] = useState(false);
+
+  const HandleSubmit = (event) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    setValidated(true);
+  };
+
+
+//function HandleSubmit(e) {
+//  e.preventDefault();
+//  console.log("HELOO");
+//}
 
   const customStyles = {
     control: (base, state) => ({
@@ -54,26 +68,27 @@ function RecipieForm() {
     }
 
   return (
-    <Form id="my-form" onSubmit={HandleSubmit}>
+    <Form id="my-form" noValidate validated={validated} onSubmit={HandleSubmit}>
       <Row>
         <Col>
           <Form.Group className="mb-3">
             <Form.Label>Recipie Name</Form.Label>
-            <Form.Control placeholder="Enter recipie name" />
+            <Form.Control placeholder="Enter recipie name" required/>
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+          <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1" required>
             <Form.Label>Description</Form.Label>
             <Form.Control
               as="textarea"
               rows={2}
               placeholder="Enter a brief description of recipie"
+              required
             />
           </Form.Group>
 
           <Form.Group controlId="formFile" className="mb-3">
             <Form.Label>Recipie Image</Form.Label>
-            <Form.Control type="file" />
+            <Form.Control type="file" required/>
           </Form.Group>
 
           <div className="d-grid mt-3 mb-3">
@@ -81,14 +96,14 @@ function RecipieForm() {
               <Col>
                 <Form.Label>Portions</Form.Label>
                 <InputGroup>
-                  <Form.Control placeholder="number" />
+                  <Form.Control placeholder="number" required/>
                   <InputGroup.Text>servings</InputGroup.Text>
                 </InputGroup>
               </Col>
               <Col>
                 <Form.Label>Preperation time</Form.Label>
                 <InputGroup>
-                  <Form.Control aria-label="Last name" placeholder="number" />
+                  <Form.Control required placeholder="number"/>
                   <InputGroup.Text>min</InputGroup.Text>
                 </InputGroup>
               </Col>
@@ -98,6 +113,7 @@ function RecipieForm() {
           <Form.Group className="d-grid mt-3 mb-3">
             <Form.Label>Category</Form.Label>
             <Select
+              
               isMulti
               name="category"
               options={CategoryOptions}
