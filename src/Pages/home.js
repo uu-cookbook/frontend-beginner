@@ -20,7 +20,8 @@ function Home() {
       prepTime: 25,
       dateUploaded: new Date(2021, 7, 5),
       photo: VegetableStirFry,
-      categories: [1, 2, 4]
+      categories: [1, 2, 4],
+      ingredients: [6]
     },
     {
       name: "Grilled Cheese Sandwich",
@@ -29,7 +30,8 @@ function Home() {
       prepTime: 10,
       dateUploaded: new Date(2021, 8, 15),
       photo: GrilledCheeseSandwich,
-      categories: [4]
+      categories: [4],
+      ingredients: [7]
     },
     {
       name: "Beef Stew",
@@ -38,7 +40,8 @@ function Home() {
       prepTime: 120,
       dateUploaded: new Date(2021, 9, 28),
       photo: BeefStew,
-      categories: [5]
+      categories: [5],
+      ingredients: [1, 6]
     },
     {
       name: "Chicken Curry",
@@ -47,7 +50,8 @@ function Home() {
       prepTime: 45,
       dateUploaded: new Date(2021, 11, 3),
       photo: ChickenCurry,
-      categories: [2, 5]
+      categories: [2, 5],
+      ingredients: [6, 4, 9]
     },
     {
       name: "Spaghetti Carbonara",
@@ -56,7 +60,8 @@ function Home() {
       prepTime: 30,
       dateUploaded: new Date(2022, 0, 12),
       photo: SpaghettiCarbonara,
-      categories: [2, 4, 5]
+      categories: [2, 4, 5],
+      ingredients: [3]
     },
     {
       name: "Baked Salmon",
@@ -65,7 +70,8 @@ function Home() {
       prepTime: 25,
       dateUploaded: new Date(2022, 1, 20),
       photo: BakedSalmon,
-      categories: [2, 5]
+      categories: [2, 5],
+      ingredients: [8]
     },
     {
       name: "Pesto Pasta",
@@ -74,7 +80,8 @@ function Home() {
       prepTime: 20,
       dateUploaded: new Date(2022, 2, 8),
       photo: PestoPasta,
-      categories: [1, 2, 4]
+      categories: [1, 2, 4],
+      ingredients: [7]
     },
     {
       name: "Taco Salad",
@@ -83,7 +90,8 @@ function Home() {
       prepTime: 35,
       dateUploaded: new Date(2022, 3, 1),
       photo: TacoSalad,
-      categories: [2, 4, 5]
+      categories: [2, 4, 5],
+      ingredients: [7]
     },
     {
       name: "Oven-Baked Chicken",
@@ -92,7 +100,8 @@ function Home() {
       prepTime: 35,
       dateUploaded: new Date(2022, 4, 12),
       photo: OvenBakedChicken,
-      categories: [4, 5]
+      categories: [4, 5],
+      ingredients: [9]
     }
   ];
 
