@@ -6,7 +6,7 @@ import Select from "react-select"
 import RecipeCard from "./RecipeCard";
 import { useState, useRef } from "react";
 
-function RecipeList({recipes}) {
+function RecipeList({recipes, listName}) {
   let currentSearch = useRef("");
   let currentSort = useRef("");
   let currentCategoryFilters = useRef([]);
@@ -135,6 +135,7 @@ function RecipeList({recipes}) {
 
   return (
       <Container>
+          {listName && <div><h2>{listName}</h2><br/></div>}
           <Form>
             <Form.Group className="mb-3" controlId="recipeSearchForm">
               <Row>
@@ -185,7 +186,14 @@ function RecipeList({recipes}) {
           {searchedRecipes.length > 0 && <Row className="card-row">
               {searchedRecipes.map((recipe) => (
                   <Col sm={6} md={4} key={recipe.name} className="card-col">
-                      <RecipeCard title={recipe.name} description={recipe.description} photo={recipe.photo} steps={recipe.steps} time={recipe.prepTime}/>
+                      <RecipeCard
+                      id={recipe.id}
+                      title={recipe.name}
+                      description={recipe.description}
+                      photo={recipe.photo}
+                      steps={recipe.steps}
+                      time={recipe.prepTime}
+                      approved={recipe.approved} />
                       <br/>
                   </Col>
               ))}

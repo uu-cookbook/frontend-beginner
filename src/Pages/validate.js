@@ -1,20 +1,12 @@
-import Card from "react-bootstrap/Card";
-import Container from "react-bootstrap/Container";
+import RecipeList from "../Components/RecipeList";
+import { Recipes } from "../Components/RecipeData";
 
 function Validation() {
   return (
     <div>
-      <Container>
-        <Card style={{ width: "18rem" }}>
-          <Card.Body>
-            <Card.Title>Recipies</Card.Title>
-            <Card.Text>
-              place where recipies thats are newly added needs to checked by
-              Borivoj
-            </Card.Text>
-          </Card.Body>
-        </Card>
-      </Container>
+      <RecipeList listName={"Recipes waiting for validation"} recipes={Recipes.filter(recipe => {
+        return recipe.approved === false;
+      })}/>
     </div>
   );
 }

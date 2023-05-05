@@ -10,6 +10,9 @@ import { NavLink } from "react-router-dom";
 // React magic
 import ModalWindow from "./ModalWindow";
 
+// Recipe data
+import { Recipes } from "./RecipeData";
+
 function NavBar() {
   return (
     <div>
@@ -23,10 +26,10 @@ function NavBar() {
             </Navbar.Brand>
             <Nav className="me-auto">
               <Nav.Link as={NavLink} to="/">
-                Recipies
+                Recipes
               </Nav.Link>
               <Nav.Link as={NavLink} to="/validation">
-                Validate <Badge bg="danger">2</Badge>{" "}
+                Validate <Badge bg="danger">{Recipes.filter((recipe) => {return recipe.approved === false}).length}</Badge>{" "}
               </Nav.Link>
               <ModalWindow buttonname="Create Recipe" />
             </Nav>
