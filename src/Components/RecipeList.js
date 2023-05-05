@@ -10,101 +10,33 @@ function RecipeList({recipes}) {
   let currentSearch = useRef("");
   let currentSort = useRef("");
   let currentCategoryFilters = useRef([]);
+  let currentIngredientFilters = useRef([]);
   
   const [searchedRecipes, setSearchedRecipes] = useState(recipes);
 
   const handleSearch = (e) => {
-    /*const newRecipes = recipes.filter(recipe => recipe.name.toLowerCase().includes(e.target.value.toLowerCase()));
-    setSearchedRecipes(newRecipes);*/
-
     currentSearch.current = e.target.value.toLowerCase();
     updateSearch();
   }
 
   const handleSort = (e) => {
-    /*console.log(e.target.value);
-    let newRecipes = searchedRecipes;
-    switch (e.target.value) {
-      case "newest":
-        newRecipes = searchedRecipes.sort(function(a, b) {
-          return (b.dateUploaded - a.dateUploaded);
-        });
-        setSearchedRecipes([...newRecipes]);
-        break;
-      case "oldest":
-        newRecipes = searchedRecipes.sort(function(a, b) {
-          return (b.dateUploaded - a.dateUploaded)*-1;
-        });
-        setSearchedRecipes([...newRecipes]);
-        break;
-      case "prepTimeAsc":
-        newRecipes = searchedRecipes.sort(function(a, b) {
-          return (b.prepTime - a.prepTime);
-        });
-        setSearchedRecipes([...newRecipes]);
-        break;
-      case "prepTimeDsc":
-        newRecipes = searchedRecipes.sort(function(a, b) {
-          return (b.prepTime - a.prepTime)*-1;
-        });
-        setSearchedRecipes([...newRecipes]);
-        break;
-      case "stepsAsc":
-        newRecipes = searchedRecipes.sort(function(a, b) {
-          return (b.steps - a.steps);
-        });
-        setSearchedRecipes([...newRecipes]);
-        break;
-      case "stepsDsc":
-        newRecipes = searchedRecipes.sort(function(a, b) {
-          return (b.steps - a.steps)*-1;
-        });
-        setSearchedRecipes([...newRecipes]);
-        break;
-      default:
-        break;
-    }*/
-
     currentSort.current = e.target.value;
     updateSearch();
   }
 
   const handleCategoryFilter = (e) => {
-    /*console.log(e);
-
-    const results = searchedRecipes.filter(recipe => {
-      for (let i = 0; i < e.length; i++) {
-        let hasCurrentCategory = false;
-
-        for (let x = 0; x < recipe.categories.length; x++) {
-          if (recipe.categories[x] === e[i].value) {
-            hasCurrentCategory = true;
-            break;
-          }
-        }
-        if (!hasCurrentCategory) {
-          return false;
-        }
-      }
-      return true;
-    });
-
-    setSearchedRecipes([...results]);*/
-
     currentCategoryFilters.current = [...e];
     updateSearch();
   }
 
-  const updateSearch = () => {
-    /* console.log(`Search: ${currentSearch}`);
-    console.log(`Sort: ${currentSort}`);
-    console.log("Current category filters:");
-    console.log(currentCategoryFilters); */
+  const handleIngredientFilter = (e) => {
+    currentIngredientFilters.current = [...e];
+    updateSearch();
+  }
 
+  const updateSearch = () => {
     // FILTER BY TEXT SEARCH
     let newRecipes = recipes.filter(recipe => recipe.name.toLowerCase().includes(currentSearch.current.toLowerCase()));
-    /* console.log("Searched:");
-    console.log(newRecipes); */
     
     // FILTER BY CATEGORIES
     newRecipes = newRecipes.filter(recipe => {
@@ -123,8 +55,24 @@ function RecipeList({recipes}) {
       }
       return true;
     });
-    /* console.log("Filtered:");
-    console.log(newRecipes); */
+
+    // FILTER BY INGREDIENTS
+    newRecipes = newRecipes.filter(recipe => {
+      for (let i = 0; i < currentIngredientFilters.current.length; i++) {
+        let hasCurrentIngredient = false;
+
+        for (let x = 0; x < recipe.ingredients.length; x++) {
+          if (recipe.ingredients[x] === currentIngredientFilters.current[i].value) {
+            hasCurrentIngredient = true;
+            break;
+          }
+        }
+        if (!hasCurrentIngredient) {
+          return false;
+        }
+      }
+      return true;
+    });
 
     // SORT
     switch (currentSort.current) {
@@ -161,9 +109,6 @@ function RecipeList({recipes}) {
       default:
         break;
     }
-    /* console.log("Sorted:");
-    console.log(newRecipes);
-    console.log("----------------------------"); */
     
     setSearchedRecipes([...newRecipes]);
   }
@@ -176,17 +121,29 @@ function RecipeList({recipes}) {
     { value: 5, label: "Meat", color: "#2e1a00"}
   ];
 
+  const Ingredients = [
+    { label: 'Flour', value: 1},
+    { label: 'Sugar', value: 2},
+    { label: 'Eggs', value: 3},
+    { label: 'Milk', value: 4},
+    { label: 'Butter', value: 5},
+    { label: 'Carrot', value: 6},
+    { label: 'Cheese', value: 7},
+    { label: 'Salmon', value: 8},
+    { label: 'Chicken', value: 9}
+  ];
+
   return (
       <Container>
           <Form>
             <Form.Group className="mb-3" controlId="recipeSearchForm">
               <Row>
-                <Col xs="5">
+                <Col xs="4">
                   <Form.Control type="text" placeholder="Search recipes"
                     onChange={handleSearch}
                   />
                 </Col>
-                <Col xs="3">
+                <Col xs="4">
                   <Select
                     isMulti
                     name="category"
@@ -216,7 +173,8 @@ function RecipeList({recipes}) {
                   isMulti
                   name="category"
                   placeholder="Select ingredients"
-                  options={CategoryOptions}
+                  options={Ingredients}
+                  onChange={handleIngredientFilter}
                   className="basic-multi-select"
                   classNamePrefix="Select recipie category"
                 />
