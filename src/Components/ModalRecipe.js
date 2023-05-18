@@ -1,7 +1,4 @@
-import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import Nav from "react-bootstrap/Nav";
-import { useState } from "react";
 
 // COMPONENTS
 import RecipeCard from "./RecipeCard";
@@ -9,20 +6,13 @@ import RecipeCard from "./RecipeCard";
 // Recipe data
 import { Recipes } from "./RecipeData";
 
-function ModalRecipe(proms) {
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
+function ModalRecipe(props) {
   return (
     <>
-      <Nav.Link onClick={handleShow}>{proms.buttonname}</Nav.Link>
-
       <Modal
         size="xl"
-        show={show}
-        onHide={handleClose}
+        show={props.show}
+        onHide={() => props.setShow(false)}
         backdrop="static"
         keyboard={false}
         centered
@@ -36,19 +26,10 @@ function ModalRecipe(proms) {
           text
 
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="primary"  type='submit' form='my-form' >Publish</Button>
-        </Modal.Footer>
+        
       </Modal>
     </>
   );
 }
 
 export default ModalRecipe;
-
-/* RANDOM NOTES
-
-<Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          */

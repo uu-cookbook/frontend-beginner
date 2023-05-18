@@ -1,15 +1,24 @@
 import Card from "react-bootstrap/Card";
 import Icon from "@mdi/react";
 import { mdiClockTimeFourOutline, mdiShoePrint } from "@mdi/js";
+import ModalRecipe from "./ModalRecipe";
 
 import NoImage from "../PlaceholderImages/no-image.jpg"
+import { useState } from "react";
 
 function RecipeCard({id, title, description, photo, steps, time, approved}) {
+    const [showRecipe, setShowRecipe] = useState(false);
+
+
     const handleClick = (e) => {
         console.log(`Card ${title} (${id}) clicked.`);
+        // MODAL HERE
+        setShowRecipe(true);
     }
 
+
     return (
+        <div>
         <Card 
         className="bg-dark text-white"
         style={approved ? {border:"0", cursor:"pointer"} : {border:"1px solid #cb444a", boxShadow:"0px 0px 0px 0.25rem #cb444a80", cursor:"pointer"}}
@@ -28,6 +37,8 @@ function RecipeCard({id, title, description, photo, steps, time, approved}) {
                 </div>
             </Card.ImgOverlay>
         </Card>
+        <ModalRecipe show={showRecipe} setShow={setShowRecipe}/>
+        </div>
     );
 }
 
