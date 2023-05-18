@@ -45,7 +45,7 @@ function NavBar() {
               <NavDropdown align="end" title={user.userName ?? 'Log in'}>
                 {users.map(user => {
                   return (
-                    <NavDropdown.Item onClick={() => changeUser(user.id)}>
+                    <NavDropdown.Item key={user.userName} onClick={() => changeUser(user.id)}>
                       {user.userName} ({user.role.name})
                     </NavDropdown.Item>
                   )
