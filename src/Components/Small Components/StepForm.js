@@ -8,12 +8,11 @@ import DropdownButton from "react-bootstrap/DropdownButton";
 import Icon from "@mdi/react";
 import { mdiDeleteForever } from "@mdi/js";
 
-import { useState } from "react";
 let id = 0
 
-function StepFrom() {
+function StepFrom({Stepts, addStep}) {
   //Step logic
-  const [Stepts, addStep] = useState([]);
+  //const [Stepts, addStep] = useState([]);
   
   console.log(Stepts);
   
@@ -57,7 +56,7 @@ function StepFrom() {
               <Form.Control
                 as="textarea"
                 value={element.content}
-
+                required
                 onChange={(e) => {
                   ChangeStepContent(element.componentId, e.target.value);
                 }}

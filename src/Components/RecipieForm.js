@@ -5,7 +5,6 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-
 //CSS
 import "../App.css";
 import "bootstrap/dist/css/bootstrap.css";
@@ -13,59 +12,130 @@ import "bootstrap/dist/css/bootstrap.css";
 //REACT MAGIC
 import { useState } from "react";
 
-//REACT SELECT (LIBRARY)
-import Select from "react-select"
-
 //SMALL COMPONENTS
 import StepFrom from "./Small Components/StepForm";
 import IngredientForm from "./Small Components/IngredientForm";
 
 function RecipieForm() {
-  
-
-  //Tag select content
-  const CategoryOptions = [
-    { value: 4, label: "Cheap", color: "#36B37E" },
-    { value: 1, label: "Vegan", color: "#00875A" },
-    { value: 2, label: "Healthy", color: "#253858" },
-    { value: 3, label: "Sweet", color: "#666666" },
-  ];
-
-
   const [validated, setValidated] = useState(false);
 
-  const HandleSubmit = (event) => {
+  //Ingredient useState
+  const [Ingredients, setIngredient] = useState([]);
+  const [Stepts, addStep] = useState([]);
+  const [Category, setCategory] = useState([]);
+  const [Name, setName] = useState("");
+  const [Portions, setPortions] = useState(0);
+  const [Preparation, setPreparation] = useState(0);
+  const [Description, setDescription] = useState("");
+
+
+  const HandleSubmit = async (event) => {
     const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
 
-    setValidated(true);
-  };
+    event.preventDefault();
+    event.stopPropagation();
 
-
-//function HandleSubmit(e) {
-//  e.preventDefault();
-//  console.log("HELOO");
-//}
-
-  const customStyles = {
-    control: (base, state) => ({
-        //border: "1px solid #ced4da",
-        borderRadius: ".375rem",
-        display: 'flex',
-
-        //color: "#212529",
-        //borderColor: "#86b7fe",
-        outline: 0,
+    console.log("Ingredients",Ingredients)
+    let payloadIngredients = [];
+    for (const element of Ingredients ){
         
-        backgroundColor: state.isSelected ? "blue" : "#fff",
-        boxShadow: state.isFocused ? "0px 0px 0px 0.25rem #0d6efd40" : "none",
-        border: state.isFocused ? "1px solid #86b7fe" : "1px solid #ced4da" ,
-        transition: "border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out"
-      }),
+        if(element.id === 0){
+        
+        let Ingredientpayload = {
+          name: element.name,
+          unit: element.unit
+        }
+
+        const response = await fetch(`http://localhost:3010/ingredient/create`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",},
+        body: JSON.stringify(Ingredientpayload),})
+        
+        const jsonData = await response.json();
+        console.log(jsonData);
+        
+
+        payloadIngredients.push({ id: jsonData.id, amount: element.amount });
+        continue
+        }
+
+        payloadIngredients.push({ id: element.id, amount: element.amount });
     }
+
+    let payloadStepts = [];
+    Stepts.forEach((element) => {
+      payloadStepts.push(element.content);
+    });
+
+    let payloadCategory = [];
+    Category.forEach((element) => {
+      payloadCategory.push(element.id);
+    });
+
+    const payload = {
+      name: Name,
+      ingredients: payloadIngredients,
+      portion: Portions,
+      preparationTime: Preparation,
+      steps: payloadStepts,
+      categoryId: payloadCategory,
+    };
+
+
+    const payyy = {
+      "name": "Vaječná pomazánka",
+      "ingredients": [
+        {
+          "id": "Bh786kl4",
+          "amount": 4
+        },
+        {
+          "id": "sd38sGw4",
+          "amount": 20
+        }
+      ],
+      "portion": 3,
+      "preparationTime": 15,
+      "steps": [
+        "Uvaříme vajíčka na tvrdo (10 min)",
+        "Vajíčka oloupeme a rozmačkáme na menší kusy",
+        "Přidáme pomazánkové máslo a všechno promícháme"
+      ],
+      "categoryId": [
+        "T8nFk03YrTI7l384r"
+      ]
+    }
+
+
+    //description: Description,
+
+    if (!form.checkValidity()) {
+      setValidated(true);
+      return;
+    }
+
+    const res = await fetch(`http://localhost:3010/recipe/create`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json();
+
+    if (res.status >= 400) {
+      console.log({ state: "error", error: data });
+    } else {
+      console.log({ state: "success", data });
+    }
+
+  }
+
+  //function HandleSubmit(e) {
+  //  e.preventDefault();
+  //  console.log("HELOO");
+  //}
 
   return (
     <Form id="my-form" noValidate validated={validated} onSubmit={HandleSubmit}>
@@ -73,22 +143,31 @@ function RecipieForm() {
         <Col>
           <Form.Group className="mb-3">
             <Form.Label>Recipie Name</Form.Label>
-            <Form.Control placeholder="Enter recipie name" required/>
+            <Form.Control
+              placeholder="Enter recipie name"
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1" required>
+          <Form.Group
+            className="mb-3"
+            controlId="exampleForm.ControlTextarea1"
+            required
+          >
             <Form.Label>Description</Form.Label>
             <Form.Control
               as="textarea"
               rows={2}
               placeholder="Enter a brief description of recipie"
               required
+              onChange={(e) => setDescription(e.target.value)}
             />
           </Form.Group>
 
           <Form.Group controlId="formFile" className="mb-3">
             <Form.Label>Recipie Image</Form.Label>
-            <Form.Control type="file" required/>
+            <Form.Control type="file" required />
           </Form.Group>
 
           <div className="d-grid mt-3 mb-3">
@@ -96,43 +175,42 @@ function RecipieForm() {
               <Col>
                 <Form.Label>Portions</Form.Label>
                 <InputGroup>
-                  <Form.Control placeholder="number" required/>
+                  <Form.Control
+                    placeholder="number"
+                    onChange={(e) => setPortions(Number(e.target.value))}
+                    required
+                    type="number"
+                  />
                   <InputGroup.Text>servings</InputGroup.Text>
                 </InputGroup>
               </Col>
               <Col>
                 <Form.Label>Preperation time</Form.Label>
                 <InputGroup>
-                  <Form.Control required placeholder="number"/>
+                  <Form.Control
+                    required
+                    placeholder="number"
+                    onChange={(e) => setPreparation(Number(e.target.value))}
+                    type="number"
+                  />
                   <InputGroup.Text>min</InputGroup.Text>
                 </InputGroup>
               </Col>
             </Row>
           </div>
 
-          <Form.Group className="d-grid mt-3 mb-3">
-            <Form.Label>Category</Form.Label>
-            <Select
-              
-              isMulti
-              name="category"
-              options={CategoryOptions}
-              className="basic-multi-select"
-              classNamePrefix="Select recipie category"
-              styles={customStyles}
-            />
-          </Form.Group>
+          <StepFrom Stepts={Stepts} addStep={addStep} />
 
-          <StepFrom />
-
-          <div className="d-grid mt-3 mb-3">
-            
-          </div>
+          <div className="d-grid mt-3 mb-3"></div>
         </Col>
         <Col>
-        
-        <IngredientForm />
-          
+          <IngredientForm
+            validation={validated}
+            Ingredients={Ingredients}
+            setIngredient={setIngredient}
+            Category={Category}
+            setCategory={setCategory}
+          />
         </Col>
       </Row>
     </Form>
