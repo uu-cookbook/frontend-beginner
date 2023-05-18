@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { UserProvider } from "./UserProvider";
 
 //COMPONENTS
 import NavBar from "./Components/NavBar" ;
@@ -18,15 +19,17 @@ import './App.css';
 
 function App() {
   return (
-    <BrowserRouter>
-      <NavBar/>
-      <div className='m-4'>
-        <Routes>
-          <Route path="/" element={<Home/>} />
-          <Route path="/Validation" element={<Validate/>} />
-        </Routes>
-      </div>
+    <UserProvider>
+      <BrowserRouter>
+        <NavBar/>
+        <div className='m-4'>
+          <Routes>
+            <Route path="/" element={<Home/>} />
+            <Route path="/Validation" element={<Validate/>} />
+          </Routes>
+        </div>
       </BrowserRouter>
+    </UserProvider>
   );
 }
 

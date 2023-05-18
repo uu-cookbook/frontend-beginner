@@ -3,6 +3,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Badge from "react-bootstrap/Badge";
 import Logo from "./Small Components/Logo";
+import { NavDropdown } from "react-bootstrap";
 
 // Router
 import { NavLink } from "react-router-dom";
@@ -13,7 +14,13 @@ import ModalWindow from "./ModalWindow";
 // Recipe data
 import { Recipes } from "./RecipeData";
 
+// User Context
+import { useContext } from "react";
+import UserContext from "../UserProvider";
+
 function NavBar() {
+  const {user, users, changeUser, isLoggedIn, canValidate} = useContext(UserContext);
+
   return (
     <div>
       <div>
@@ -28,21 +35,26 @@ function NavBar() {
               <Nav.Link as={NavLink} to="/">
                 Recipes
               </Nav.Link>
-              <Nav.Link as={NavLink} to="/validation">
+              {canValidate() && <Nav.Link as={NavLink} to="/validation">
                 Validate <Badge bg="danger">{Recipes.filter((recipe) => {return recipe.approved === false}).length}</Badge>{" "}
-              </Nav.Link>
-              <ModalWindow buttonname="Create Recipe" />
+              </Nav.Link>}
+              {isLoggedIn() && <ModalWindow buttonname="Create Recipe" />}
             </Nav>
-            {/* <Nav>
-              <Form className="d-flex">
-                <Form.Control
-                  type="search"
-                  placeholder="Search recipies"
-                  className="me-2"
-                  aria-label="Search"
-                />
-              </Form>
-            </Nav> */}
+            <Nav>
+              {isLoggedIn() && <img src={user.picture} className="rounded-circle" alt="profile" width={"45px"} height={"45px"}/>}
+              <NavDropdown align="end" title={user.userName ?? 'Log in'}>
+                {users.map(user => {
+                  return (
+                    <NavDropdown.Item onClick={() => changeUser(user.id)}>
+                      {user.userName} ({user.role.name})
+                    </NavDropdown.Item>
+                  )
+                })}
+                <NavDropdown.Item onClick={() => changeUser(-1)}>
+                  Log out
+                </NavDropdown.Item>
+              </NavDropdown>
+            </Nav>
           </Container>
         </Navbar>
       </div>
