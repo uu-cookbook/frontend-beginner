@@ -46,7 +46,11 @@ export function UserProvider({ children }) {
 
         setUser(result);
         sessionStorage.setItem('authUser', JSON.stringify(result));
-        window.location.replace('http://localhost:3000/');
+        const splitUrl = window.location.href.split("/");
+        const otherPage = splitUrl[3];
+        if (otherPage !== "") {
+            window.location.replace(window.location.href.replace(otherPage, ""));
+        }
     }
 
     const isLoggedIn = () => {
