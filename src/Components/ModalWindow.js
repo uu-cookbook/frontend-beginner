@@ -43,15 +43,13 @@ function ModalWindow(proms) {
         </Modal.Header>
         <Modal.Body>
 
-          <RecipieForm setFormEddited={setFormEddited} />
+          <RecipieForm setAlertShow={()=>proms.setAlertShow()}setFormEddited={setFormEddited} setShow={setShow} />
 
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary"  type='submit' form='my-form' >Publish</Button>
+          <Button variant="primary"  type='submit' form='my-form'>Publish</Button>
         </Modal.Footer>
       </Modal>
-
-
 
 
       <Modal

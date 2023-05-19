@@ -19,6 +19,7 @@ import IngredientForm from "./Small Components/IngredientForm";
 function RecipieForm(props) {
   const [validated, setValidated] = useState(false);
 
+
   //Ingredient useState
   const [Ingredients, setIngredient] = useState([]);
   const [Stepts, addStep] = useState([]);
@@ -101,14 +102,32 @@ function RecipieForm(props) {
       },
       body: JSON.stringify(payload),
     });
-    const data = await res.json();
+  
+  var x = document.getElementById("formFile");
+  
+  const data = await res.json();
+  console.log("data",data)
+    
+  const apiData = new FormData();
+  apiData.append("id", "5406dcdd0c8329b7");
+  apiData.append("data", x.files[0]);
+
+  const img = await fetch(`http://localhost:3010/recipe/update_image`, {
+      method: "POST",
+      body: apiData,
+    });
+    const dataImg = await img.json();
+  console.log("Imageeeee Mesage",dataImg)
 
     if (res.status >= 400) {
       console.log({ state: "error", error: data });
     } else {
       console.log({ state: "success", data });
+      props.setShow(false) //close modal
+      props.setAlertShow(true)
     }
   }
+  
 
   //function HandleSubmit(e) {
   //  e.preventDefault();
@@ -142,10 +161,14 @@ function RecipieForm(props) {
               onChange={(e) => setDescription(e.target.value)}
             />
           </Form.Group>
+          
 
           <Form.Group controlId="formFile" className="mb-3">
             <Form.Label>Recipie Image</Form.Label>
-            <Form.Control type="file" required />
+            <Form.Control onChange={(e) => {
+                  console.log("formTarget",e.target)}}
+
+            id="formFile" type="file" required />
           </Form.Group>
 
           <div className="d-grid mt-3 mb-3">
@@ -177,7 +200,7 @@ function RecipieForm(props) {
             </Row>
           </div>
 
-          <StepFrom Stepts={Stepts} addStep={addStep} />
+          <StepFrom validation={validated} Stepts={Stepts} addStep={addStep} />
 
           <div className="d-grid mt-3 mb-3"></div>
         </Col>

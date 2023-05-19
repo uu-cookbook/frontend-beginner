@@ -10,7 +10,7 @@ import { mdiDeleteForever } from "@mdi/js";
 
 let id = 0
 
-function StepFrom({Stepts, addStep}) {
+function StepFrom({validation,Stepts, addStep}) {
   //Step logic
   //const [Stepts, addStep] = useState([]);
   
@@ -90,6 +90,8 @@ function StepFrom({Stepts, addStep}) {
               + add {Stepts.length>0 && "antother" } step
             </Button>
             </div>
+           {validation&&Stepts.length===0?<div class="invalid-feedback" style={{display: "flex"}}>Recipie misses Steps! Press button to add Step</div>:<></>}
+
     </div>
   );
 }

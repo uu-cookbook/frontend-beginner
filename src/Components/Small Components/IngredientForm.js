@@ -368,6 +368,7 @@ function IngredientForm({
           + add {Ingredients.length > 0 && "antother"} ingredient
         </Button>
       </div>
+      {validation&&Ingredients.length===0?<div class="invalid-feedback" style={{display: "flex"}}>Recipie misses ingredients! Press button to add Ingredient</div>:<></>}
 
       <Form.Group className="d-grid mt-3 mb-3">
         <Form.Label>Category</Form.Label>
