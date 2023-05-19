@@ -12,6 +12,13 @@
   font-weight: 700;
 }
 
+h1 {
+  font-family: 'Baloo Bhaijaan 2',
+  cursive;
+  font-weight: 700;
+  text-align: center;
+}
+
 .dropdown-toggle::after {
   display: none !important; 
 }
