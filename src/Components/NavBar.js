@@ -20,7 +20,7 @@ import UserContext from "../UserProvider";
 
 function NavBar() {
   const {user, users, changeUser, isLoggedIn, canValidate} = useContext(UserContext);
-
+  
   return (
     <div>
       <div>

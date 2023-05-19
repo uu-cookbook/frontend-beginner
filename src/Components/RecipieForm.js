@@ -16,7 +16,7 @@ import { useState } from "react";
 import StepFrom from "./Small Components/StepForm";
 import IngredientForm from "./Small Components/IngredientForm";
 
-function RecipieForm() {
+function RecipieForm(props) {
   const [validated, setValidated] = useState(false);
 
   //Ingredient useState
@@ -28,6 +28,11 @@ function RecipieForm() {
   const [Preparation, setPreparation] = useState(0);
   const [Description, setDescription] = useState("");
 
+  if(!(Ingredients.length === 0 && Stepts.length === 0 && Category.length === 0 && Name==="" && Portions===0 && Preparation===0 && Description==="")){
+  props.setFormEddited(true)
+  }else{
+  props.setFormEddited(false)
+  }
 
   const HandleSubmit = async (event) => {
     const form = event.currentTarget;
@@ -82,32 +87,6 @@ function RecipieForm() {
       categoryId: payloadCategory,
     };
 
-
-    const payyy = {
-      "name": "Vaječná pomazánka",
-      "ingredients": [
-        {
-          "id": "Bh786kl4",
-          "amount": 4
-        },
-        {
-          "id": "sd38sGw4",
-          "amount": 20
-        }
-      ],
-      "portion": 3,
-      "preparationTime": 15,
-      "steps": [
-        "Uvaříme vajíčka na tvrdo (10 min)",
-        "Vajíčka oloupeme a rozmačkáme na menší kusy",
-        "Přidáme pomazánkové máslo a všechno promícháme"
-      ],
-      "categoryId": [
-        "T8nFk03YrTI7l384r"
-      ]
-    }
-
-
     //description: Description,
 
     if (!form.checkValidity()) {
@@ -115,7 +94,7 @@ function RecipieForm() {
       return;
     }
 
-    const res = await fetch(`http://localhost:3010/recipe/create`, {
+  const res = await fetch(`http://localhost:3010/recipe/create`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -129,7 +108,6 @@ function RecipieForm() {
     } else {
       console.log({ state: "success", data });
     }
-
   }
 
   //function HandleSubmit(e) {
