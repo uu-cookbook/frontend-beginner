@@ -13,9 +13,48 @@ code {
 }
 
 .recipe-card {
-  width: 75%;
+  height: 0;
+  padding-bottom: 56.25%;
+}
+
+.recipe-card_inner-wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
 
 .recipe-img-overlay {
   background: linear-gradient(0deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0) 70%, rgba(0,0,0,0.6) 100%);
+}
+
+.dots {
+  margin: auto;
+  width: 88px;
+  height: 42.2px;
+  background: radial-gradient(circle closest-side,#808080 90%,#0000) 0%   50%,
+         radial-gradient(circle closest-side,#808080 90%,#0000) 50%  50%,
+         radial-gradient(circle closest-side,#808080 90%,#0000) 100% 50%;
+  background-size: calc(100%/3) 21.1px;
+  background-repeat: no-repeat;
+  animation: dots-7ar3yq 1s infinite linear;
+}
+
+@keyframes dots-7ar3yq {
+  20% {
+     background-position: 0%   0%, 50%  50%,100%  50%;
+  }
+
+  40% {
+     background-position: 0% 100%, 50%   0%,100%  50%;
+  }
+
+  60% {
+     background-position: 0%  50%, 50% 100%,100%   0%;
+  }
+
+  80% {
+     background-position: 0%  50%, 50%  50%,100% 100%;
+  }
 }
