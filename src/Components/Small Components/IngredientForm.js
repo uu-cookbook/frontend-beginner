@@ -14,102 +14,11 @@ import { mdiDeleteForever } from "@mdi/js";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 
-// REACT MAGIC
-import { useState } from "react";
-
 //REACT SELECT (LIBRARY)
 import Select from "react-select";
 
 //REACT SELECT (LIBRARY)
 import CreatableSelect from "react-select/creatable";
-
-// //Ingredien select content
-let basticOptions = [
-  {
-    name: "Voda",
-    id: "sd38sGw4",
-    unit: "ml",
-    approved: true,
-  },
-  {
-    name: "Vejce",
-    id: "Bh786kl4",
-    unit: "ks",
-    approved: true,
-  },
-  {
-    name: "Hladká mouka",
-    id: "am05suG0",
-    unit: "g",
-    approved: true,
-  },
-  {
-    name: "Hrubá mouka",
-    unit: "g",
-    approved: true,
-    id: "c2214107be5861cd",
-  },
-  {
-    name: "Paprika",
-    unit: "ks",
-    approved: true,
-    id: "8f8c29a03bfeb4d1",
-  },
-];
-
-//Tag select content
-const CategoryOptions = [
-  {
-    name: "Soup",
-    id: "56rKd785abJudv75",
-    color: "#FF00F0",
-  },
-  {
-    name: "Main course",
-    id: "64gdfsbZGhb85iKa",
-    color: "#FFFB00",
-  },
-  {
-    name: "Desert",
-    id: "Ke58hDji7NpAn8tR",
-    color: "#00F7FF",
-  },
-  {
-    name: "Salad",
-    id: "k7sFgfH7H8ka98a7",
-    color: "#00FF0F",
-  },
-  {
-    name: "Vegan",
-    id: "1Ohk8dhAP8h73jK4",
-    color: "#8B00FF",
-  },
-  {
-    name: "Vegetarian",
-    id: "T8nFk03YrTI7l384r",
-    color: "#0023FF",
-  },
-  {
-    name: "Grill",
-    id: "68LorN7dG348tR4",
-    color: "#FF0000",
-  },
-  {
-    name: "Drink",
-    id: "RDYumqZSvg24C286",
-    color: "#DFFF00",
-  },
-  {
-    name: "Fish",
-    id: "sU5jw9PKM6NbvDeX",
-    color: "#6495ED",
-  },
-  {
-    name: "Meat",
-    id: "f81sml6eD7EdtTtV",
-    color: "#40E0D0",
-  },
-];
 
 const customStyles = {
   control: (base, state) => ({
@@ -132,9 +41,14 @@ function IngredientForm({
   validation,
   Ingredients,
   setIngredient,
-  Category,
   setCategory,
+  IngredientsFetch,
+  setIngredientsFetch,
+  CategoryFetch
 }) {
+
+
+
   const customStylesStandard = {
     control: (base, state) => ({
       //border: "1px solid #ced4da",
@@ -203,9 +117,6 @@ function IngredientForm({
   // INGREDIENT FILE
   //
 
-  //const [Ingredients, setIngredient] = useState([]);
-  const [SelectOptions, setSelectOptions] = useState(basticOptions);
-
   //CHANGE INGREDIENT NAME
   function changeIngredientName(componentId, e) {
     const index = Ingredients.findIndex(
@@ -234,7 +145,7 @@ function IngredientForm({
   function CreateOption(componentId, text) {
     //const genIngredientID = crypto.randomUUID()
     const createdOption = { name: text, id: 0, unit: "...", approved: false };
-    setSelectOptions([...SelectOptions, createdOption]);
+    setIngredientsFetch([...IngredientsFetch, createdOption]);
 
     changeIngredientName(componentId, createdOption);
     console.log("Ingredients when created", Ingredients);
@@ -299,7 +210,7 @@ function IngredientForm({
               <CreatableSelect
                 isClearable
                 backspaceRemovesValue={true}
-                options={SelectOptions}
+                options={IngredientsFetch}
                 onCreateOption={(text) =>
                   CreateOption(element.componentId, text)
                 }
@@ -375,12 +286,12 @@ function IngredientForm({
         <Select
           isMulti
           name="category"
-          options={CategoryOptions}
+          options={CategoryFetch}
           className="basic-multi-select"
           classNamePrefix="Select recipie category"
           styles={customStyles}
-          getOptionLabel={(CategoryOptions) => CategoryOptions.name}
-          getOptionValue={(CategoryOptions) => CategoryOptions.id}
+          getOptionLabel={(e) => e.name}
+          getOptionValue={(e) => e.id}
           onChange={(e) => ChangeCategory(e)}
         />
       </Form.Group>
