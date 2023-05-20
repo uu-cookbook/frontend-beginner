@@ -4,6 +4,8 @@ import Navbar from "react-bootstrap/Navbar";
 import Badge from "react-bootstrap/Badge";
 import Logo from "./Small Components/Logo";
 import { NavDropdown } from "react-bootstrap";
+import Alert from "react-bootstrap/Alert";
+import CloseButton from 'react-bootstrap/CloseButton';
 
 // Router
 import { NavLink } from "react-router-dom";
@@ -15,15 +17,42 @@ import ModalWindow from "./ModalWindow";
 import { Recipes } from "./RecipeData";
 
 // User Context
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import UserContext from "../UserProvider";
 
+//icons
+
 function NavBar() {
-  const {user, users, changeUser, isLoggedIn, canValidate} = useContext(UserContext);
-  
+  const { user, users, changeUser, isLoggedIn, canValidate } = useContext(UserContext);
+  const [AlertShow, setAlertShow] = useState(false)
+
+  useEffect(() => {
+    // when the component is mounted, the alert is displayed for 3 seconds
+    setTimeout(() => {
+      setAlertShow(false);
+    }, 12000);
+  }, [AlertShow]);
+
   return (
     <div>
-      <div>
+      <div
+        style={{ position: "absolute", zIndex: "1" }}
+        className="mt-4 position-absolute top-0 start-50 translate-middle-x w-50 mb-0">
+        <Alert show={AlertShow} variant="success">
+        
+        
+        <div class="d-flex flex-row-reverse">
+        <CloseButton onClick={()=>setAlertShow(false)}/><Alert.Heading className=" flex-fill">Recipe sent successfully!</Alert.Heading>
+        </div>
+          <p>
+            Thank you for sharing your recipe. We have received it and are now
+            waiting for confirmation. Once approved, it will be featured on our
+            CookiCorn.
+          </p>
+        </Alert>
+      </div>
+
+      <div style={{ position: "relative", zIndex: "0" }}>
         <Navbar bg="light" variant="light">
           <Container>
             <Navbar.Brand as={NavLink} to="/" className="d-flex flex-row">
@@ -35,20 +64,40 @@ function NavBar() {
               <Nav.Link as={NavLink} to="/">
                 Recipes
               </Nav.Link>
-              {canValidate() && <Nav.Link as={NavLink} to="/validation">
-                Validate <Badge bg="danger">{Recipes.filter((recipe) => {return recipe.approved === false}).length}</Badge>{" "}
-              </Nav.Link>}
-              {isLoggedIn() && <ModalWindow buttonname="Create Recipe" />}
+              {canValidate() && (
+                <Nav.Link as={NavLink} to="/validation">
+                  Validate{" "}
+                  <Badge bg="danger">
+                    {
+                      Recipes.filter((recipe) => {
+                        return recipe.approved === false;
+                      }).length
+                    }
+                  </Badge>{" "}
+                </Nav.Link>
+              )}
+              {isLoggedIn() && <ModalWindow setAlertShow={setAlertShow} buttonname="Create Recipe" />}
             </Nav>
             <Nav>
-              {isLoggedIn() && <img src={user.picture} className="rounded-circle" alt="profile" width={"45px"} height={"45px"}/>}
-              <NavDropdown align="end" title={user.userName ?? 'Log in'}>
-                {users.map(user => {
+              {isLoggedIn() && (
+                <img
+                  src={user.picture}
+                  className="rounded-circle"
+                  alt="profile"
+                  width={"45px"}
+                  height={"45px"}
+                />
+              )}
+              <NavDropdown align="end" title={user.userName ?? "Log in"}>
+                {users.map((user) => {
                   return (
-                    <NavDropdown.Item key={user.userName} onClick={() => changeUser(user.id)}>
+                    <NavDropdown.Item
+                      key={user.userName}
+                      onClick={() => changeUser(user.id)}
+                    >
                       {user.userName} ({user.role.name})
                     </NavDropdown.Item>
-                  )
+                  );
                 })}
                 <NavDropdown.Item onClick={() => changeUser(-1)}>
                   Log out

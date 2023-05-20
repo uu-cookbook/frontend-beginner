@@ -10,11 +10,10 @@ import { mdiDeleteForever } from "@mdi/js";
 
 let id = 0
 
-function StepFrom({Stepts, addStep}) {
+function StepFrom({validation,Stepts, addStep}) {
   //Step logic
   //const [Stepts, addStep] = useState([]);
   
-  console.log(Stepts);
   
 
   function ClickAddStep() {
@@ -22,15 +21,11 @@ function StepFrom({Stepts, addStep}) {
     const newSelect = [{ componentId: id, content: "" }];
 
     addStep(Stepts.concat(newSelect));
-    console.log(Stepts);
   }
 
   function ClickDeleteStep(componentId) {
     addStep( ()=>{
     const index = Stepts.findIndex((obj) => obj.componentId === componentId);
-    console.log(componentId)
-    console.log(index)
-    console.log(Stepts[index])
       return [
         ...Stepts.slice(0, index),
         ...Stepts.slice(index + 1),
@@ -38,11 +33,9 @@ function StepFrom({Stepts, addStep}) {
   }
 
   function ChangeStepContent(componentId, content) {
-    console.log(content)
     const index = Stepts.findIndex((obj) => obj.componentId === componentId);
     Stepts[index].content = content;
     addStep([...Stepts]);
-    console.log(Stepts);
   }
 
   return (
@@ -90,6 +83,8 @@ function StepFrom({Stepts, addStep}) {
               + add {Stepts.length>0 && "antother" } step
             </Button>
             </div>
+           {validation&&Stepts.length===0?<div class="invalid-feedback" style={{display: "flex"}}>Recipie misses Steps! Press button to add Step</div>:<></>}
+
     </div>
   );
 }

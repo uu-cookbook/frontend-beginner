@@ -19,6 +19,7 @@ import IngredientForm from "./Small Components/IngredientForm";
 function RecipieForm(props) {
   const [validated, setValidated] = useState(false);
 
+
   //Ingredient useState
   const [Ingredients, setIngredient] = useState([]);
   const [Stepts, addStep] = useState([]);
@@ -27,6 +28,7 @@ function RecipieForm(props) {
   const [Portions, setPortions] = useState(0);
   const [Preparation, setPreparation] = useState(0);
   const [Description, setDescription] = useState("");
+  const [File,setFile] = useState(null)
 
   if(!(Ingredients.length === 0 && Stepts.length === 0 && Category.length === 0 && Name==="" && Portions===0 && Preparation===0 && Description==="")){
   props.setFormEddited(true)
@@ -40,7 +42,6 @@ function RecipieForm(props) {
     event.preventDefault();
     event.stopPropagation();
 
-    console.log("Ingredients",Ingredients)
     let payloadIngredients = [];
     for (const element of Ingredients ){
         
@@ -52,6 +53,7 @@ function RecipieForm(props) {
         }
 
         const response = await fetch(`http://localhost:3010/ingredient/create`, {
+        mode: 'no-cors',
         method: "POST",
         headers: {
           "Content-Type": "application/json",},
@@ -80,6 +82,7 @@ function RecipieForm(props) {
 
     const payload = {
       name: Name,
+      description:Description,
       ingredients: payloadIngredients,
       portion: Portions,
       preparationTime: Preparation,
@@ -101,14 +104,44 @@ function RecipieForm(props) {
       },
       body: JSON.stringify(payload),
     });
-    const data = await res.json();
+  
+  const data = await res.json();
+  //console.log("data",data)
+
+    try {
+      const apiData = new FormData();
+      apiData.append("id", data.id);
+      apiData.append("file", File[0]);
+
+      const img = await fetch(`http://localhost:3010/image/create`,{
+        method: "POST",
+        body: apiData,
+      });
+
+      if (img.ok) {
+        // File upload successful
+        console.log('File uploaded successfully');
+      } else {
+        // Handle error response
+        console.error('File upload failed');
+        console.log(img)
+        return
+      }
+    } catch (error) {
+      // Handle network or other errors
+      console.error('Error occurred while uploading the file', error);
+      return
+    }
 
     if (res.status >= 400) {
       console.log({ state: "error", error: data });
     } else {
       console.log({ state: "success", data });
+      props.setShow(false) //close modal
+      props.setAlertShow(true)
     }
   }
+  
 
   //function HandleSubmit(e) {
   //  e.preventDefault();
@@ -130,7 +163,6 @@ function RecipieForm(props) {
 
           <Form.Group
             className="mb-3"
-            controlId="exampleForm.ControlTextarea1"
             required
           >
             <Form.Label>Description</Form.Label>
@@ -142,10 +174,13 @@ function RecipieForm(props) {
               onChange={(e) => setDescription(e.target.value)}
             />
           </Form.Group>
+          
 
-          <Form.Group controlId="formFile" className="mb-3">
+          <Form.Group className="mb-3">
             <Form.Label>Recipie Image</Form.Label>
-            <Form.Control type="file" required />
+            <Form.Control onChange={(e) => {setFile(e.target.files); console.log("filee upload",e.target.files)}}
+
+            id="formFile" type="file" required />
           </Form.Group>
 
           <div className="d-grid mt-3 mb-3">
@@ -177,7 +212,7 @@ function RecipieForm(props) {
             </Row>
           </div>
 
-          <StepFrom Stepts={Stepts} addStep={addStep} />
+          <StepFrom validation={validated} Stepts={Stepts} addStep={addStep} />
 
           <div className="d-grid mt-3 mb-3"></div>
         </Col>
