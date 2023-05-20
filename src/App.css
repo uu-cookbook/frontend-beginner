@@ -16,7 +16,16 @@ h1 {
   font-family: 'Baloo Bhaijaan 2',
   cursive;
   font-weight: 700;
-  text-align: center;
+}
+
+h2 {
+  font-family: 'Baloo Bhaijaan 2',
+  cursive;
+  font-weight: 550;
+}
+
+.recipe-text {
+  font-size: medium;
 }
 
 .dropdown-toggle::after {

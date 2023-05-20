@@ -5,6 +5,7 @@ import ModalRecipe from "./ModalRecipe";
 
 import NoImage from "../PlaceholderImages/no-image.jpg"
 import { useState } from "react";
+import { Recipes } from "./RecipeData";
 
 function RecipeCard({recipe}) {
     const [showRecipe, setShowRecipe] = useState(false);
@@ -12,7 +13,7 @@ function RecipeCard({recipe}) {
     const handleClick = (e) => {
         console.log(`Card ${recipe.name} (${recipe.id}) clicked.`);
         // MODAL HERE
-        //setShowRecipe(true);
+        setShowRecipe(true);
     }
 
     console.log(`http://localhost:3010/image/get?image=${recipe.image}`)
@@ -37,7 +38,7 @@ function RecipeCard({recipe}) {
                 </div>
             </Card.ImgOverlay>
         </Card>
-        <ModalRecipe show={showRecipe} setShow={setShowRecipe}/>
+        <ModalRecipe show={showRecipe} setShow={setShowRecipe} recipe={recipe}/>
         </div>
     );
 }

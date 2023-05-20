@@ -1,10 +1,14 @@
 import Modal from "react-bootstrap/Modal";
+import CloseButton from "react-bootstrap/esm/CloseButton";
+import { useState } from "react";
 
 // COMPONENTS
-import RecipeCard from "./RecipeCard";
+//import RecipeCard from "./RecipeCard";
 
 // Recipe data
-import { Recipes } from "./RecipeData";
+//import { Recipes } from "./RecipeData";
+
+import Recipe from "./Recipe"
 
 function ModalRecipe(props) {
   return (
@@ -16,14 +20,11 @@ function ModalRecipe(props) {
         backdrop="static"
         keyboard={false}
         centered
-      >
-        <Modal.Header closeButton>
-          <Modal.Title>{Recipes.name}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
+      >       
+        <Modal.Body >
 
-          <RecipeCard />
-          text
+          <div style={{textAlign: "right"}}><CloseButton onClick={() => props.setShow(false)} style={{align: "right"}}/></div>
+          <Recipe recipe={props.recipe}/>
 
         </Modal.Body>
         
