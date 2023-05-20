@@ -44,13 +44,11 @@ function NavBar() {
         <div class="d-flex flex-row-reverse">
         <CloseButton onClick={()=>setAlertShow(false)}/><Alert.Heading className=" flex-fill">Recipe sent successfully!</Alert.Heading>
         </div>
-          
           <p>
             Thank you for sharing your recipe. We have received it and are now
             waiting for confirmation. Once approved, it will be featured on our
             CookiCorn.
           </p>
-
         </Alert>
       </div>
 

@@ -28,6 +28,7 @@ function RecipieForm(props) {
   const [Portions, setPortions] = useState(0);
   const [Preparation, setPreparation] = useState(0);
   const [Description, setDescription] = useState("");
+  const [File,setFile] = useState(null)
 
   if(!(Ingredients.length === 0 && Stepts.length === 0 && Category.length === 0 && Name==="" && Portions===0 && Preparation===0 && Description==="")){
   props.setFormEddited(true)
@@ -41,7 +42,6 @@ function RecipieForm(props) {
     event.preventDefault();
     event.stopPropagation();
 
-    console.log("Ingredients",Ingredients)
     let payloadIngredients = [];
     for (const element of Ingredients ){
         
@@ -53,6 +53,7 @@ function RecipieForm(props) {
         }
 
         const response = await fetch(`http://localhost:3010/ingredient/create`, {
+        mode: 'no-cors',
         method: "POST",
         headers: {
           "Content-Type": "application/json",},
@@ -81,6 +82,7 @@ function RecipieForm(props) {
 
     const payload = {
       name: Name,
+      description:Description,
       ingredients: payloadIngredients,
       portion: Portions,
       preparationTime: Preparation,
@@ -103,21 +105,33 @@ function RecipieForm(props) {
       body: JSON.stringify(payload),
     });
   
-  var x = document.getElementById("formFile");
-  
   const data = await res.json();
-  console.log("data",data)
-    
-  const apiData = new FormData();
-  apiData.append("id", "5406dcdd0c8329b7");
-  apiData.append("data", x.files[0]);
+  //console.log("data",data)
 
-  const img = await fetch(`http://localhost:3010/recipe/update_image`, {
-      method: "POST",
-      body: apiData,
-    });
-    const dataImg = await img.json();
-  console.log("Imageeeee Mesage",dataImg)
+    try {
+      const apiData = new FormData();
+      apiData.append("id", data.id);
+      apiData.append("file", File[0]);
+
+      const img = await fetch(`http://localhost:3010/image/create`,{
+        method: "POST",
+        body: apiData,
+      });
+
+      if (img.ok) {
+        // File upload successful
+        console.log('File uploaded successfully');
+      } else {
+        // Handle error response
+        console.error('File upload failed');
+        console.log(img)
+        return
+      }
+    } catch (error) {
+      // Handle network or other errors
+      console.error('Error occurred while uploading the file', error);
+      return
+    }
 
     if (res.status >= 400) {
       console.log({ state: "error", error: data });
@@ -149,7 +163,6 @@ function RecipieForm(props) {
 
           <Form.Group
             className="mb-3"
-            controlId="exampleForm.ControlTextarea1"
             required
           >
             <Form.Label>Description</Form.Label>
@@ -163,10 +176,9 @@ function RecipieForm(props) {
           </Form.Group>
           
 
-          <Form.Group controlId="formFile" className="mb-3">
+          <Form.Group className="mb-3">
             <Form.Label>Recipie Image</Form.Label>
-            <Form.Control onChange={(e) => {
-                  console.log("formTarget",e.target)}}
+            <Form.Control onChange={(e) => {setFile(e.target.files); console.log("filee upload",e.target.files)}}
 
             id="formFile" type="file" required />
           </Form.Group>

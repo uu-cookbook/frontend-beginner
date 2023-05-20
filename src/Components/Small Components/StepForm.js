@@ -14,7 +14,6 @@ function StepFrom({validation,Stepts, addStep}) {
   //Step logic
   //const [Stepts, addStep] = useState([]);
   
-  console.log(Stepts);
   
 
   function ClickAddStep() {
@@ -22,15 +21,11 @@ function StepFrom({validation,Stepts, addStep}) {
     const newSelect = [{ componentId: id, content: "" }];
 
     addStep(Stepts.concat(newSelect));
-    console.log(Stepts);
   }
 
   function ClickDeleteStep(componentId) {
     addStep( ()=>{
     const index = Stepts.findIndex((obj) => obj.componentId === componentId);
-    console.log(componentId)
-    console.log(index)
-    console.log(Stepts[index])
       return [
         ...Stepts.slice(0, index),
         ...Stepts.slice(index + 1),
@@ -38,11 +33,9 @@ function StepFrom({validation,Stepts, addStep}) {
   }
 
   function ChangeStepContent(componentId, content) {
-    console.log(content)
     const index = Stepts.findIndex((obj) => obj.componentId === componentId);
     Stepts[index].content = content;
     addStep([...Stepts]);
-    console.log(Stepts);
   }
 
   return (

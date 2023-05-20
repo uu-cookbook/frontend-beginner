@@ -2,6 +2,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Nav from "react-bootstrap/Nav";
 import { useState } from "react";
+import { Alert, CloseButton } from "react-bootstrap";
 
 // COMPONENTS
 import RecipieForm from "./RecipieForm";
@@ -40,6 +41,7 @@ function ModalWindow(proms) {
       >
         <Modal.Header closeButton>
           <Modal.Title>Create Recipie</Modal.Title>
+          
         </Modal.Header>
         <Modal.Body>
 
@@ -50,7 +52,6 @@ function ModalWindow(proms) {
           <Button variant="primary"  type='submit' form='my-form'>Publish</Button>
         </Modal.Footer>
       </Modal>
-
 
       <Modal
         show={showConfirm}
