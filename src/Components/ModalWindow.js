@@ -2,7 +2,6 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Nav from "react-bootstrap/Nav";
 import { useState } from "react";
-import { Alert, CloseButton } from "react-bootstrap";
 
 // COMPONENTS
 import RecipieForm from "./RecipieForm";
