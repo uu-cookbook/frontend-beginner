@@ -3,10 +3,7 @@ import CloseButton from "react-bootstrap/esm/CloseButton";
 import { useState } from "react";
 
 // COMPONENTS
-//import RecipeCard from "./RecipeCard";
-
-// Recipe data
-//import { Recipes } from "./RecipeData";
+//import RecipeCard from "./RecipeCard"
 
 import Recipe from "./Recipe"
 
