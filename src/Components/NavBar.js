@@ -13,18 +13,14 @@ import { NavLink } from "react-router-dom";
 // React magic
 import ModalWindow from "./ModalWindow";
 
-// Recipe data
-import { Recipes } from "./RecipeData";
-
 // User Context
 import { useContext, useState, useEffect } from "react";
 import UserContext from "../UserProvider";
 
-//icons
-
 function NavBar() {
   const { user, users, changeUser, isLoggedIn, canValidate } = useContext(UserContext);
   const [AlertShow, setAlertShow] = useState(false)
+  const [unapprovedAmount, setUnapprovedAmount] = useState(0);
 
   useEffect(() => {
     // when the component is mounted, the alert is displayed for 3 seconds
@@ -32,6 +28,31 @@ function NavBar() {
       setAlertShow(false);
     }, 12000);
   }, [AlertShow]);
+
+  useEffect(() => {
+    getUnapprovedRecipeAmount(); // get amount before waiting for interval for the first time
+
+    const intervalCall = setInterval(() => {
+      getUnapprovedRecipeAmount();
+    }, 30000);
+    return () => {
+      // clean up
+      clearInterval(intervalCall);
+    };
+  }, []);
+
+  const getUnapprovedRecipeAmount = (() => {
+    fetch("http://localhost:3010/recipe/amount?approved=false")
+      .then(res => {
+        if (!res.ok) {
+            throw Error('Could not fetch data for that resource.');
+        }
+        return res.json();
+      })
+      .then(data => {
+          setUnapprovedAmount(data);
+      })
+  });
 
   return (
     <div>
@@ -67,13 +88,9 @@ function NavBar() {
               {canValidate() && (
                 <Nav.Link as={NavLink} to="/validation">
                   Validate{" "}
-                  <Badge bg="danger">
-                    {
-                      Recipes.filter((recipe) => {
-                        return recipe.approved === false;
-                      }).length
-                    }
-                  </Badge>{" "}
+                  {unapprovedAmount>0 && <Badge bg="danger">
+                    {unapprovedAmount}
+                  </Badge>}{" "}
                 </Nav.Link>
               )}
               {isLoggedIn() && <ModalWindow setAlertShow={setAlertShow} buttonname="Create Recipe" />}
