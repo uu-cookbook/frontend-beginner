@@ -10,7 +10,7 @@ import "../App.css";
 import "bootstrap/dist/css/bootstrap.css";
 
 //REACT MAGIC
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 //SMALL COMPONENTS
 import StepFrom from "./Small Components/StepForm";
@@ -29,6 +29,25 @@ function RecipieForm(props) {
   const [Preparation, setPreparation] = useState(0);
   const [Description, setDescription] = useState("");
   const [File,setFile] = useState(null)
+
+
+  const [IngredientsFetch,setIngredientsFetch] = useState(null)
+  const [CategoryFetch,setCategoryFetch] = useState(null)
+  
+  useEffect(() => {
+    async function fetchData(){
+    //ingredients
+    const response = await fetch("http://localhost:3010/ingredient/list")
+    const jsonData = await response.json();
+    setIngredientsFetch(jsonData.filter(ingredient => {return ingredient.approved === true}))
+    
+    //Category
+    const response2 = await fetch("http://localhost:3010/category/list")
+    const jsonData2 = await response2.json();
+    setCategoryFetch(jsonData2);
+  }
+  fetchData()
+  }, []);
 
   if(!(Ingredients.length === 0 && Stepts.length === 0 && Category.length === 0 && Name==="" && Portions===0 && Preparation===0 && Description==="")){
   props.setFormEddited(true)
@@ -221,8 +240,10 @@ function RecipieForm(props) {
             validation={validated}
             Ingredients={Ingredients}
             setIngredient={setIngredient}
-            Category={Category}
             setCategory={setCategory}
+            IngredientsFetch={IngredientsFetch}
+            CategoryFetch={CategoryFetch}
+            setIngredientsFetch={setIngredientsFetch}
           />
         </Col>
       </Row>
