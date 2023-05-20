@@ -16,12 +16,14 @@ function RecipeListFetch({listName, validationMode}) {
   return (
     <div>
       {recipesPending && ingredientsPending && categoriesPending && <div className="dots"></div>}
+
       {errorFetchingData && <Container>
         <h2 style={{color: "gray", textAlign: "center"}}>Failed to fetch data.</h2>
         {recipesError && <p style={{color: "gray", textAlign: "center"}}>Recipes: {recipesError}</p>}
         {ingredientsError && <p style={{color: "gray", textAlign: "center"}}>Ingredients: {ingredientsError}</p>}
         {categoriesError && <p style={{color: "gray", textAlign: "center"}}>Categories: {ingredientsError}</p>}
       </Container>}
+      
       {recipes && ingredients && categories && <RecipeList
         ingredients={ingredients.filter(ingredient => {
           if (validationMode) {
