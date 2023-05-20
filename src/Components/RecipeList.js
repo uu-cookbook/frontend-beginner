@@ -17,9 +17,24 @@ function RecipeList({listName, recipes, ingredients, categories}) {
   useEffect(() => {
     // THINGS HAPPENING ONLY ON FIRST RENDER BELOW
 
-    // CONVERT DATES FROM ISO TO DATE
     recipes.forEach((recipe) => {
+      // CONVERT DATES FROM ISO TO DATE
       recipe.date = new Date(recipe.date);
+
+      // ADD INGREDIENT NAME AND UNIT
+      recipe.ingredients.forEach((recipeIngredient) => {
+        console.log(recipeIngredient.id);
+        let result = ingredients.filter(ingredient => {
+          return ingredient.id === recipeIngredient.id
+        })
+
+        if (result) {
+          recipeIngredient.name = result[0].name;
+          recipeIngredient.unit = result[0].unit;
+        }
+      });
+
+      //console.log(recipe);
     });
 
     // CONVERT INGREDIENTS TO INGREDIENT OPTIONS
@@ -31,7 +46,7 @@ function RecipeList({listName, recipes, ingredients, categories}) {
       delete ingredient.id;
       delete ingredient.approved;
     });
-    console.log(ingredients);
+    //console.log(ingredients);
 
     // CONVERT CATEGORIES TO CATEGORY OPTIONS
     categories.forEach((category) => {
