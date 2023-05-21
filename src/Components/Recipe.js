@@ -11,7 +11,8 @@ import { mdiClockTimeFourOutline, mdiAccountMultiple } from "@mdi/js";
 //TODO
 //Portions number
 //Check portions and time
-//Check ingredient css (Form)
+//Check and fix ingredient css (Form)
+//Fix numbered list of steps
 
 //Category???
 //Checkbox strike???
@@ -38,25 +39,26 @@ return(
                 <Col>
                     <h2>Steps:</h2>
                         {props.recipe.steps.map((element) => (
-                            <ListGroup numbered key={element.steps} className="mb-4">                            
+                            <ListGroup numbered key={element} className="mb-1">                            
                             
-                                 <ListGroup.Item >{element.steps}</ListGroup.Item>
-                                 <ListGroup.Item>{props.recipe.steps[0]}</ListGroup.Item>
-                                 <ListGroup.Item>{props.recipe.steps[1]}</ListGroup.Item>
+                                 <ListGroup.Item>{element}</ListGroup.Item>
                             
                             </ListGroup>
                         ))}
-                         <Stack gap={3}>
-                            {}
-                            <div class = "recipe-text">{/* number of step */} {props.recipe.steps}</div>
-                            <div class = "recipe-text">{/* props.recipe.steps */}</div>
-                        </Stack>
+                        
+                        {props.recipe.steps.map((element) => (
+                            <div key={element} className="mb-1">                            
+                            
+                                 <ol><li>{element}</li></ol>
+                            
+                            </div>
+                        ))}
                 </Col>
                 <Col>
                     <h2>Ingredients:</h2>
                         <Form>
                             {props.recipe.ingredients.map((element) => (
-                            <div key={`ingredient-${element.name}`} className="mb-3">
+                            <div class="col" key={`ingredient-${element.name}`} className="mb-3">
                                 <Form.Check // prettier-ignore
                                     inline
                                     type={'checkbox'}
@@ -71,6 +73,7 @@ return(
                             ))}
                         </Form>
                 </Col>
+                <input class="form-control form-control-sm" type="text" placeholder=".form-control-sm" aria-label=".form-control-sm example"></input>
             </Row>
         </Stack>
     </Row>
