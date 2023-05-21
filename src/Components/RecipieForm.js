@@ -199,7 +199,7 @@ function RecipieForm(props) {
             <Form.Label>Recipie Image</Form.Label>
             <Form.Control onChange={(e) => {setFile(e.target.files); console.log("filee upload",e.target.files)}}
 
-            id="formFile" type="file" required />
+            id="formFile" type="file" accept=".jpg,.png" required />
           </Form.Group>
 
           <div className="d-grid mt-3 mb-3">
@@ -210,6 +210,7 @@ function RecipieForm(props) {
                   <Form.Control
                     placeholder="number"
                     onChange={(e) => setPortions(Number(e.target.value))}
+                    min="1"
                     required
                     type="number"
                   />
@@ -222,6 +223,7 @@ function RecipieForm(props) {
                   <Form.Control
                     required
                     placeholder="number"
+                    min="1"
                     onChange={(e) => setPreparation(Number(e.target.value))}
                     type="number"
                   />
