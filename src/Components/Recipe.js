@@ -5,12 +5,18 @@ import Badge from 'react-bootstrap/Badge'; //Category window
 import Stack from 'react-bootstrap/Stack';
 import Form from 'react-bootstrap/Form';
 import Icon from "@mdi/react";
+import ListGroup from 'react-bootstrap/ListGroup';
 import { mdiClockTimeFourOutline, mdiAccountMultiple } from "@mdi/js";
 
+//TODO
+//Portions number
+//Check portions and time
+//Check ingredient css (Form)
+
+//Category???
+//Checkbox strike???
 
 function Recipe(props) {
-console.log(props.recipe.ingredients[0].amount)
-console.log(props.recipe.image)
 return(
     <Row>
         <Stack gap ={4}>
@@ -20,45 +26,50 @@ return(
                 </Col>
                 <Col>
                     <h1>{props.recipe.name}</h1>
-                    <div>
+                    <div style={{paddingBottom: "32%", border: "1px solid white"}}>
                         {props.recipe.description}
-                        <div style={{width: "100%"}}>
-                            <div style={{textAlign: "end"}}><Icon path={mdiAccountMultiple} size={1} /> {props.recipe.portion} <Icon path={mdiClockTimeFourOutline} size={1} /> {props.recipe.preparationTime} min</div>
-                        </div>
                     </div>
+
+                    <div style={{textAlign: "end"}}><Icon path={mdiAccountMultiple} size={1} />{props.recipe.portion} <Icon path={mdiClockTimeFourOutline} size={1} /> {props.recipe.preparationTime} min</div>
+                   
                 </Col>
             </Row>
             <Row>
                 <Col>
                     <h2>Steps:</h2>
+                        {props.recipe.steps.map((element) => (
+                            <ListGroup numbered key={element.steps} className="mb-4">                            
+                            
+                                 <ListGroup.Item >{element.steps}</ListGroup.Item>
+                                 <ListGroup.Item>{props.recipe.steps[0]}</ListGroup.Item>
+                                 <ListGroup.Item>{props.recipe.steps[1]}</ListGroup.Item>
+                            
+                            </ListGroup>
+                        ))}
                          <Stack gap={3}>
+                            {}
                             <div class = "recipe-text">{/* number of step */} {props.recipe.steps}</div>
                             <div class = "recipe-text">{/* props.recipe.steps */}</div>
                         </Stack>
                 </Col>
                 <Col>
                     <h2>Ingredients:</h2>
-                    <div>   
-                        <Stack>
-                            <Row>
-                                <Col>
-                                    <Form>
-                                    {[`${props.recipe.ingredients[0].id}`].map((name) => (
-                                        <div key={`ingredient-${name}`} className="mb-3">
-                                        <Form.Check // prettier-ignore
-                                            type={'checkbox'}
-                                            label={name}
-                                        />
-                                        </div>
-                                    ))}
-                                    </Form>
-                                </Col>
-                                <Col>
-                                    <div class = "recipe-text" style={{textAlign: "end"}}>{props.recipe.ingredients[0].amount} {/* props.recipe.ingredients[0].id[]. */"unit"}</div> 
-                                </Col>
-                            </Row>
-                        </Stack>
-                    </div>
+                        <Form>
+                            {props.recipe.ingredients.map((element) => (
+                            <div key={`ingredient-${element.name}`} className="mb-3">
+                                <Form.Check // prettier-ignore
+                                    inline
+                                    type={'checkbox'}
+                                    label={`${element.name}`}
+                                />
+                                <Form.Text
+                                    class="recipe-text"
+                                    >
+                                        {element.amount} {element.unit}
+                                 </Form.Text>     
+                            </div>
+                            ))}
+                        </Form>
                 </Col>
             </Row>
         </Stack>
