@@ -42,6 +42,7 @@ function IngredientForm({
   Ingredients,
   setIngredient,
   setCategory,
+  Category,
   IngredientsFetch,
   setIngredientsFetch,
   CategoryFetch
@@ -232,7 +233,7 @@ function IngredientForm({
                   onChange={(e) =>
                     AmountUpdate(element.componentId, e.target.value)
                   }
-                  value={element.value}
+                  value={element.amount}
                   required
                 />
 
@@ -295,7 +296,9 @@ function IngredientForm({
           getOptionLabel={(e) => e.name}
           getOptionValue={(e) => e.id}
           onChange={(e) => ChangeCategory(e)}
+          defaultValue={Category}
         />
+        <div>{console.log(Category)}</div>
       </Form.Group>
     </div>
   );

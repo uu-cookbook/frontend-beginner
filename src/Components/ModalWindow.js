@@ -39,16 +39,16 @@ function ModalWindow(proms) {
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title>Create Recipie</Modal.Title>
+        {proms.buttonname==="EDIT"?<Modal.Title>Edit Recipie</Modal.Title>:<Modal.Title>Create Recipie</Modal.Title>}
           
         </Modal.Header>
         <Modal.Body>
 
-          <RecipieForm setAlertShow={()=>proms.setAlertShow()}setFormEddited={setFormEddited} setShow={setShow} />
+          <RecipieForm setAlertShow={()=>proms.setAlertShow()}setFormEddited={setFormEddited} setShow={setShow} inputData={proms.inputData} edditMode={proms.buttonname==="EDIT"}/>
 
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="primary"  type='submit' form='my-form'>Publish</Button>
+        {proms.buttonname==="EDIT"?<Button variant="primary" type='submit' form='my-form'>SAVE CHANGES</Button>:<Button variant="primary"  type='submit' form='my-form'>Publish</Button>}
         </Modal.Footer>
       </Modal>
 

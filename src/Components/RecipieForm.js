@@ -18,22 +18,13 @@ import IngredientForm from "./Small Components/IngredientForm";
 
 function RecipieForm(props) {
   const [validated, setValidated] = useState(false);
+  console.log(props.inputData)
 
 
-  //Ingredient useState
-  const [Ingredients, setIngredient] = useState([]);
-  const [Stepts, addStep] = useState([]);
-  const [Category, setCategory] = useState([]);
-  const [Name, setName] = useState("");
-  const [Portions, setPortions] = useState(0);
-  const [Preparation, setPreparation] = useState(0);
-  const [Description, setDescription] = useState("");
-  const [File,setFile] = useState(null)
-
-
+  // Data Fetching
   const [IngredientsFetch,setIngredientsFetch] = useState(null)
   const [CategoryFetch,setCategoryFetch] = useState(null)
-  
+
   useEffect(() => {
     async function fetchData(){
     //ingredients
@@ -48,6 +39,44 @@ function RecipieForm(props) {
   }
   fetchData()
   }, []);
+
+
+  //Ingredient useState
+  const [Ingredients, setIngredient] = useState([]);
+  const [Stepts, addStep] = useState([]);
+  const [Category, setCategory] = useState([]);
+  const [Name, setName] = useState("");
+  const [Portions, setPortions] = useState(0);
+  const [Preparation, setPreparation] = useState(0);
+  const [Description, setDescription] = useState("");
+  const [File,setFile] = useState(null)
+
+  useEffect(()=>{
+    if(props.inputData){
+    console.log(props.inputData)
+    setIngredient(props.inputData.ingredients)
+
+    let stepts = []
+    props.inputData.steps.forEach((element,index) => {
+      let object = { componentId: index, content: element }
+      stepts.push(object)
+    });
+    addStep(stepts)
+
+    // let inputCategory = []
+    // props.inputData.categoryId.forEach((element) => {
+    //   inputCategory.push(CategoryFetch.find((finding)=>{return element === finding.id}))
+    // })
+    // setCategory(inputCategory)
+    // console.log(inputCategory)
+
+    setName(props.inputData.name)
+    setPortions(props.inputData.portion)
+    setPreparation(props.inputData.preparationTime)
+    setDescription(props.inputData.description)
+  }
+  },[])
+
 
   if(!(Ingredients.length === 0 && Stepts.length === 0 && Category.length === 0 && Name==="" && Portions===0 && Preparation===0 && Description==="")){
   props.setFormEddited(true)
@@ -109,12 +138,51 @@ function RecipieForm(props) {
       categoryId: payloadCategory,
     };
 
-    //description: Description,
-
     if (!form.checkValidity()) {
       setValidated(true);
       return;
     }
+
+  if (props.edditMode){
+    payload.id=props.inputData.id
+    const res = await fetch(`http://localhost:3010/recipe/update`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+    const data = await res.json();
+    console.log("edit",data)
+    props.setShow(false)
+
+    try {
+      const apiData = new FormData();
+      apiData.append("id", props.inputData.id);
+      apiData.append("file", File[0]);
+
+      const img = await fetch(`http://localhost:3010/image/update`,{
+        method: "POST",
+        body: apiData,
+      });
+
+      if (img.ok) {
+        // File upload successful
+        console.log('File uploaded successfully');
+      } else {
+        // Handle error response
+        console.error('File upload failed');
+        console.log(img)
+        return
+      }
+    } catch (error) {
+      // Handle network or other errors
+      console.error('Error occurred while uploading the file', error);
+      return
+    }
+    return
+  }
+
 
   const res = await fetch(`http://localhost:3010/recipe/create`, {
       method: "POST",
@@ -160,7 +228,6 @@ function RecipieForm(props) {
       props.setAlertShow(true)
     }
   }
-  
 
   //function HandleSubmit(e) {
   //  e.preventDefault();
@@ -176,6 +243,7 @@ function RecipieForm(props) {
             <Form.Control
               placeholder="Enter recipie name"
               onChange={(e) => setName(e.target.value)}
+              value={Name}
               required
             />
           </Form.Group>
@@ -191,6 +259,7 @@ function RecipieForm(props) {
               placeholder="Enter a brief description of recipie"
               required
               onChange={(e) => setDescription(e.target.value)}
+              value={Description}
             />
           </Form.Group>
           
@@ -199,7 +268,7 @@ function RecipieForm(props) {
             <Form.Label>Recipie Image</Form.Label>
             <Form.Control onChange={(e) => {setFile(e.target.files); console.log("filee upload",e.target.files)}}
 
-            id="formFile" type="file" accept=".jpg,.png" required />
+            id="formFile" type="file" accept=".jpg,.png" required={!props.edditMode} />
           </Form.Group>
 
           <div className="d-grid mt-3 mb-3">
@@ -213,6 +282,7 @@ function RecipieForm(props) {
                     min="1"
                     required
                     type="number"
+                    value={Portions}
                   />
                   <InputGroup.Text>servings</InputGroup.Text>
                 </InputGroup>
@@ -226,6 +296,7 @@ function RecipieForm(props) {
                     min="1"
                     onChange={(e) => setPreparation(Number(e.target.value))}
                     type="number"
+                    value={Preparation}
                   />
                   <InputGroup.Text>min</InputGroup.Text>
                 </InputGroup>
@@ -246,6 +317,7 @@ function RecipieForm(props) {
             IngredientsFetch={IngredientsFetch}
             CategoryFetch={CategoryFetch}
             setIngredientsFetch={setIngredientsFetch}
+            Category={Category}
           />
         </Col>
       </Row>

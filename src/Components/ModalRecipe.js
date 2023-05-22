@@ -1,13 +1,46 @@
 import Modal from "react-bootstrap/Modal";
 import CloseButton from "react-bootstrap/esm/CloseButton";
-import { useState } from "react";
+//import { useState useContext} from "react";
+import Button from "react-bootstrap/Button";
 
 // COMPONENTS
 //import RecipeCard from "./RecipeCard"
+import ModalWindow from "./ModalWindow";
+import UserContext from "../UserProvider";
 
 import Recipe from "./Recipe"
+import { useContext } from "react";
 
 function ModalRecipe(props) {
+  const { canValidate } = useContext(UserContext);
+  console.log("recipie",props.recipe)
+
+  async function deleteRecipie(ID){
+    console.log("This is ID",ID)
+    const response = await fetch("http://localhost:3010/recipe/delete?id="+ID)
+    const jsonData = await response
+    console.log("DELATION",jsonData)
+    props.setShow(false)
+  }
+
+  async function acceptRecipie(ID){  
+    let Acceptpayload = {
+      "id" : ID,
+      "approved": true
+      }
+
+    const response = await fetch(`http://localhost:3010/recipe/update`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",},
+    body: JSON.stringify(Acceptpayload),})
+    
+    const jsonData = await response.json();
+    console.log(jsonData);
+    
+    props.setShow(false)
+  }
+
   return (
     <>
       <Modal
@@ -17,14 +50,24 @@ function ModalRecipe(props) {
         backdrop="static"
         keyboard={false}
         centered
-      >       
+      >  
+      {canValidate()===true?     
+      <Modal.Header closeButton>
+          <Modal.Title>Recipie</Modal.Title>
+      </Modal.Header>:<></>}
+
         <Modal.Body >
 
-          <div style={{textAlign: "right"}}><CloseButton onClick={() => props.setShow(false)} style={{align: "right"}}/></div>
+          <div style={{textAlign: "right"}}>{canValidate()===false?<CloseButton onClick={() => props.setShow(false)} style={{align: "right"}}/>:<></>}</div>
           <Recipe recipe={props.recipe}/>
-
         </Modal.Body>
         
+        {canValidate()?
+        <Modal.Footer>
+        <Button variant="primary"><ModalWindow buttonname="EDIT" inputData={props.recipe}/></Button>
+        <Button variant="danger" onClick={()=>deleteRecipie(props.recipe.id)}>DELETE</Button>
+        {props.recipe.approved===false?<Button variant="success" onClick={()=>acceptRecipie(props.recipe.id)}>ACCEPT RECIPIE</Button>:<></>}
+        </Modal.Footer>:<></>}
       </Modal>
     </>
   );

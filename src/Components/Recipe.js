@@ -1,7 +1,7 @@
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import Row from 'react-bootstrap/Row';
-import Badge from 'react-bootstrap/Badge'; //Category window
+//import Badge from 'react-bootstrap/Badge'; //Category window
 import Stack from 'react-bootstrap/Stack';
 import Form from 'react-bootstrap/Form';
 import Icon from "@mdi/react";
