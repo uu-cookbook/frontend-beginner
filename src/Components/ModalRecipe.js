@@ -17,27 +17,58 @@ function ModalRecipe(props) {
   async function deleteRecipie(id){
     console.log("THI IS RECIPIE",props.recipe)
     console.log("This is ID",id)
-    const response = await fetch("http://localhost:3010/recipe/delete?id="+id)
+    
+    const response = await fetch("http://localhost:3010/recipe/delete?id="+id,{
+      method: "post",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }})
+    
     const jsonData = await response
     console.log("DELATION",jsonData)
     props.setShow(false)
   }
 
   async function acceptRecipie(ID){  
-    let Acceptpayload = {
+    
+    const unaproved = props.recipe.ingredients.filter((element)=>element.approved===false)
+    
+    console.log("List of Ingredients",unaproved)
+    
+    await unaproved.forEach(element => {
+      const Acceptpayload = {
+        "id" : element.id,
+        "approved": true
+        }
+      
+      console.log(Acceptpayload,element)
+      async function postino(Acceptpayload){
+        const response = await fetch(`http://localhost:3010/ingredient/update`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",},
+          body: JSON.stringify(Acceptpayload),})
+          
+          const jsonData = await response.json();
+          console.log("Response",jsonData);
+      }
+
+      postino(Acceptpayload)
+    });
+    
+    let AcceptRecipie = {
       "id" : ID,
       "approved": true
       }
-
     const response = await fetch(`http://localhost:3010/recipe/update`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",},
-    body: JSON.stringify(Acceptpayload),})
-    
-    const jsonData = await response.json();
-    console.log(jsonData);
-    
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",},
+          body: JSON.stringify(AcceptRecipie),})
+          
+          const jsonData = await response.json();
+          console.log(jsonData);
     props.setShow(false)
   }
 

@@ -145,7 +145,7 @@ function IngredientForm({
   //CREATE OPTION
   function CreateOption(componentId, text) {
     //const genIngredientID = crypto.randomUUID()
-    const createdOption = { name: text, id: 0, unit: "...", approved: false };
+    const createdOption = { name: text, id: 0, unit: null, approved: false };
     setIngredientsFetch([...IngredientsFetch, createdOption]);
 
     changeIngredientName(componentId, createdOption);
@@ -161,7 +161,7 @@ function IngredientForm({
     const genID = crypto.randomUUID();
     setIngredient([
       ...Ingredients,
-      { componentId: genID, name: "", id: "", unit: "..." },
+      { componentId: genID, name: "", id: ""},
     ]);
   }
 
@@ -206,8 +206,8 @@ function IngredientForm({
 
       {Ingredients.map((element) => {
         return (
-          <Row className="mt-3 mb-3" key={element.componentId}>
-            <Col>
+          <Row className="mt-3 mb-3" key={element.componentId} style={element.approved===false?{backgroundColor: "#e5425540"}:null}>
+            <Col style={{columnRuleColor: "red"}}>
               <CreatableSelect
                 isClearable
                 backspaceRemovesValue={true}
@@ -242,10 +242,10 @@ function IngredientForm({
                     placeholder="unit"
                     type="text"
                     min="1"
+                    value={element.unit}
                     onChange={(e) =>
                       UnitNameUpdate(element.componentId, e.target.value)
                     }
-                    value={element.value}
                     pattern="[a-zA-Z]+"
                     required
                   />

@@ -7,6 +7,7 @@ import Form from 'react-bootstrap/Form';
 import Icon from "@mdi/react";
 import ListGroup from 'react-bootstrap/ListGroup';
 import { mdiClockTimeFourOutline, mdiAccountMultiple } from "@mdi/js";
+import { useState } from "react";
 
 //TODO
 //Portions number function
@@ -19,6 +20,9 @@ import { mdiClockTimeFourOutline, mdiAccountMultiple } from "@mdi/js";
 
 function Recipe(props) {
     let i = 1
+    console.log(props)
+    const [Value,setValue] = useState(props.recipe.portion)
+    const [Multiplayer,setMultiplayer] = useState(1)
 return(
     <Row>
         <Stack gap ={4}>
@@ -34,7 +38,7 @@ return(
 
                     <div style={{textAlign: "end"}}>
                         <Icon path={mdiAccountMultiple} size={1} />&nbsp;
-                        <input class="input-number" type="number" placeholder={props.recipe.portion} min = {props.recipe.portion} step={props.recipe.portion}></input>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input class="input-number" type="number" value={Value} min = {props.recipe.portion} step={props.recipe.portion} onChange={(e)=>{setValue(e.target.value);setMultiplayer(e.target.value/props.recipe.portion)}}></input>&nbsp;&nbsp;&nbsp;&nbsp;
                         <Icon path={mdiClockTimeFourOutline} size={1} />&nbsp;
                         {props.recipe.preparationTime}&nbsp; min&nbsp;&nbsp;
                         <hr></hr>
@@ -57,14 +61,14 @@ return(
                     <h2>Ingredients:</h2>
                         <Form>
                             {props.recipe.ingredients.map((element) => (
-                            <div class="col" key={`ingredient-${element.name}`} className="mb-3">
+                            <div class="col" key={`ingredient-${element.name}`} className="mb-3" style={element.approved===false?{backgroundColor: "#e5425540"}:null}>
                                 <Form.Check // prettier-ignore
                                     inline
                                     type={'checkbox'}
                                     label={`${element.name}`}
                                 />
                                 <Form.Text>
-                                    {element.amount} {element.unit}
+                                    {element.amount*Multiplayer} {element.unit}
                                  </Form.Text>     
                             </div>
                             ))}

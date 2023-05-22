@@ -27,8 +27,8 @@ function RecipeList({listName, recipes, ingredients, categories}) {
         let result = ingredients.filter(ingredient => {
           return ingredient.id === recipeIngredient.id
         })
-
-        if (result) {
+        
+        if (result.length>0) {
           recipeIngredient.name = result[0].name;
           recipeIngredient.unit = result[0].unit;
           recipeIngredient.approved = result[0].approved;
