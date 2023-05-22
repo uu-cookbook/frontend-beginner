@@ -7,6 +7,7 @@ import Form from 'react-bootstrap/Form';
 import Icon from "@mdi/react";
 import ListGroup from 'react-bootstrap/ListGroup';
 import { mdiClockTimeFourOutline, mdiAccountMultiple } from "@mdi/js";
+import { useState, useEffect } from "react";
 
 //TODO
 //Portions number function
@@ -18,13 +19,20 @@ import { mdiClockTimeFourOutline, mdiAccountMultiple } from "@mdi/js";
 //Checkbox strike???
 
 function Recipe(props) {
-    let i = 1
+    let stepNum = 1
+    /* let x = "input-portion"/props.recipe.portion
+    console.log("input-portion")
+    let modifAmound = x*props.recipe.ingredients,amount */
+    let [Value,setValue]=useState(props.recipe.portion)
+    let [Multiply,setMultiply]=useState(1)
+
+    //try(amount===0?props.recipe.portion:modifAmound*props.recipe.portion)
 return(
     <Row>
         <Stack gap ={4}>
             <Row>
                 <Col>
-                    <Image src={`http://localhost:3010/image/get?image=${props.recipe.image}`} style={{width: "100%"}} rounded alt="Recipe Image" />
+                    <Image src={`http://localhost:3010/image/get?image=${props.recipe.image}`} style={{width: "100%",  width: "100%", height: "305px", objectFit: "cover"}} rounded alt="Recipe Image" />
                 </Col>
                 <Col>
                     <h1>{props.recipe.name}</h1>
@@ -34,7 +42,7 @@ return(
 
                     <div style={{textAlign: "end"}}>
                         <Icon path={mdiAccountMultiple} size={1} />&nbsp;
-                        <input class="input-number" type="number" placeholder={props.recipe.portion} min = {props.recipe.portion} step={props.recipe.portion}></input>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input onChange={(e) => {setValue(e.target.value); setMultiply(Value/props.recipe.portion); console.log(Value, e.target.value)}} class="input-number" type="number" placeholder={props.recipe.portion} min = {props.recipe.portion} step={props.recipe.portion}></input>&nbsp;&nbsp;&nbsp;&nbsp;
                         <Icon path={mdiClockTimeFourOutline} size={1} />&nbsp;
                         {props.recipe.preparationTime}&nbsp; min&nbsp;&nbsp;
                         <hr></hr>
@@ -48,7 +56,7 @@ return(
                         {props.recipe.steps.map((element) => (
                             <ListGroup key={element} className="mb-1">                            
                             
-                                 <ListGroup.Item>{i++ +". " +element + " "}</ListGroup.Item>
+                                 <ListGroup.Item>{stepNum++ +". " +element + " "}</ListGroup.Item>
                             
                             </ListGroup>
                         ))}
