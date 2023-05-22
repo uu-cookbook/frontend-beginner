@@ -31,44 +31,37 @@ function ModalRecipe(props) {
   }
 
   async function acceptRecipie(ID){  
-    
+    /// accept ingredients
     const unaproved = props.recipe.ingredients.filter((element)=>element.approved===false)
-    
-    console.log("List of Ingredients",unaproved)
-    
-    await unaproved.forEach(element => {
-      const Acceptpayload = {
-        "id" : element.id,
-        "approved": true
-        }
-      
-      console.log(Acceptpayload,element)
-      async function postino(Acceptpayload){
-        const response = await fetch(`http://localhost:3010/ingredient/update`, {
+    unaproved.forEach(element => {
+      element.approved = true
+    });
+
+    console.log(unaproved);
+
+    const response = await fetch(`http://localhost:3010/ingredient/update-list`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",},
-          body: JSON.stringify(Acceptpayload),})
-          
-          const jsonData = await response.json();
-          console.log("Response",jsonData);
-      }
+          body: JSON.stringify(unaproved),})
 
-      postino(Acceptpayload)
-    });
+    const jsonData = await response.json();
+    console.log("Response",jsonData);
     
+    /// accept recipie
     let AcceptRecipie = {
       "id" : ID,
       "approved": true
       }
-    const response = await fetch(`http://localhost:3010/recipe/update`, {
+    
+    const response2 = await fetch(`http://localhost:3010/recipe/update`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",},
           body: JSON.stringify(AcceptRecipie),})
           
-          const jsonData = await response.json();
-          console.log(jsonData);
+          const jsonData2 = await response2.json();
+          console.log(jsonData2);
     props.setShow(false)
   }
 

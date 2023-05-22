@@ -45,7 +45,8 @@ function IngredientForm({
   Category,
   IngredientsFetch,
   setIngredientsFetch,
-  CategoryFetch
+  CategoryFetch,
+  edditMode
 }) {
 
 
@@ -167,6 +168,15 @@ function IngredientForm({
 
   //DELETE ROW
   function deleteIngredient(componentId) {
+    
+    const index = Ingredients.findIndex(
+      (obj) => obj.componentId === componentId
+    );
+
+    if(edditMode&&Ingredients[index].approved===false){
+      console.log("DELETE")
+    }
+    
     setIngredient([
       ...Ingredients.filter((obj) => obj.componentId !== componentId),
     ]);

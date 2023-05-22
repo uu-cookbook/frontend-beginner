@@ -325,6 +325,7 @@ function RecipieForm(props) {
             CategoryFetch={CategoryFetch}
             setIngredientsFetch={setIngredientsFetch}
             Category={Category}
+            edditMode={props.edditMode}
           />
         </Col>
       </Row>

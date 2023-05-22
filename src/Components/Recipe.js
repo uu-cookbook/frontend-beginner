@@ -38,7 +38,9 @@ return(
 
                     <div style={{textAlign: "end"}}>
                         <Icon path={mdiAccountMultiple} size={1} />&nbsp;
-                        <input class="input-number" type="number" value={Value} min = {props.recipe.portion} step={props.recipe.portion} onChange={(e)=>{setValue(e.target.value);setMultiplayer(e.target.value/props.recipe.portion)}}></input>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input class="input-number" onKeyDown={e => e.preventDefault()} style={Value>100?{width: String( String(String(Value).length*20)+"px") }:null}
+                        
+                        type="number" value={Value} min = {props.recipe.portion} step={props.recipe.portion} onChange={(e)=>{setValue(e.target.value);setMultiplayer(e.target.value/props.recipe.portion)}}></input>&nbsp;&nbsp;&nbsp;&nbsp;
                         <Icon path={mdiClockTimeFourOutline} size={1} />&nbsp;
                         {props.recipe.preparationTime}&nbsp; min&nbsp;&nbsp;
                         <hr></hr>
