@@ -28,7 +28,7 @@ return(
         <Stack gap ={4}>
             <Row>
                 <Col>
-                    <Image src={`http://localhost:3010/image/get?image=${props.recipe.image}`} style={{width: "100%"}} rounded alt="Recipe Image" />
+                    <Image src={`http://localhost:3010/image/get?image=${props.recipe.image}`} style={{width: "100%",  width: "100%", height: "305px", objectFit: "cover"}} rounded alt="Recipe Image" />
                 </Col>
                 <Col>
                     <h1>{props.recipe.name}</h1>
@@ -52,7 +52,7 @@ return(
                         {props.recipe.steps.map((element) => (
                             <ListGroup key={element} className="mb-1">                            
                             
-                                 <ListGroup.Item>{i++ +". " +element + " "}</ListGroup.Item>
+                                 <ListGroup.Item>{stepNum++ +". " +element + " "}</ListGroup.Item>
                             
                             </ListGroup>
                         ))}

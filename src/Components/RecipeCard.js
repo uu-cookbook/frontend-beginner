@@ -25,7 +25,7 @@ function RecipeCard({recipe}) {
         style={recipe.approved ? {border:"0", cursor:"pointer"} : {border:"1px solid #cb444a", boxShadow:"0px 0px 0px 0.25rem #cb444a80", cursor:"pointer"}}
         onClick={handleClick}
         >
-            <Card.Img src={recipe.image ? `http://localhost:3010/recipe_images/${recipe.image}` : NoImage} alt="Recipe image" className="recipe-card_inner-wrapper"/>
+            <Card.Img style={{width: "100%", height: "100%", objectFit: "cover"}} src={recipe.image ? `http://localhost:3010/recipe_images/${recipe.image}` : NoImage} alt="Recipe image" className="recipe-card_inner-wrapper"/>
             <Card.ImgOverlay className="d-flex flex-column align-items-start recipe-img-overlay">
                 <div style={{width: "100%"}}>
                     <Card.Text style={{textAlign: "right"}}><Icon path={mdiShoePrint} size={1} /> {recipe.steps.length} <Icon path={mdiClockTimeFourOutline} size={1} /> {recipe.preparationTime} min</Card.Text>
