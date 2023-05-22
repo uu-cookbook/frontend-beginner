@@ -19,7 +19,7 @@ import { useState } from "react";
 //Checkbox strike???
 
 function Recipe(props) {
-    let i = 1
+    let stepNum = 1
     console.log(props)
     const [Value,setValue] = useState(props.recipe.portion)
     const [Multiplayer,setMultiplayer] = useState(1)
@@ -32,7 +32,7 @@ return(
                 </Col>
                 <Col>
                     <h1>{props.recipe.name}</h1>
-                    <div style={{paddingBottom: "28%", border: "1px solid white", overflow: "hidden"}}rows="6" cols="50">
+                    <div style={{blockSize: "200px", border: "1px solid white", overflow: "hidden"}}rows="6" cols="50">
                         {props.recipe.description}
                     </div>
 
