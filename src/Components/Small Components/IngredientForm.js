@@ -298,7 +298,6 @@ function IngredientForm({
           onChange={(e) => ChangeCategory(e)}
           defaultValue={Category}
         />
-        <div>{console.log(Category)}</div>
       </Form.Group>
     </div>
   );

@@ -18,7 +18,7 @@ import IngredientForm from "./Small Components/IngredientForm";
 
 function RecipieForm(props) {
   const [validated, setValidated] = useState(false);
-  console.log(props.inputData)
+  //console.log(props.inputData)
 
 
   // Data Fetching
@@ -46,15 +46,24 @@ function RecipieForm(props) {
   const [Stepts, addStep] = useState([]);
   const [Category, setCategory] = useState([]);
   const [Name, setName] = useState("");
-  const [Portions, setPortions] = useState(0);
-  const [Preparation, setPreparation] = useState(0);
+  const [Portions, setPortions] = useState(null);
+  const [Preparation, setPreparation] = useState(null);
   const [Description, setDescription] = useState("");
   const [File,setFile] = useState(null)
 
   useEffect(()=>{
     if(props.inputData){
-    console.log(props.inputData)
-    setIngredient(props.inputData.ingredients)
+
+    let ingredints =[]
+    console.log("ingredients",props.inputData.ingredients)
+
+    props.inputData.ingredients.forEach(element => {
+      const genID = crypto.randomUUID()
+      element.componentId = genID
+      ingredints.push(element)
+    });
+    console.log("ingredients outrput",ingredints)
+    setIngredient(ingredints)
 
     let stepts = []
     props.inputData.steps.forEach((element,index) => {
@@ -74,8 +83,7 @@ function RecipieForm(props) {
     setPortions(props.inputData.portion)
     setPreparation(props.inputData.preparationTime)
     setDescription(props.inputData.description)
-  }
-  },[])
+  }},[props.inputData])
 
 
   if(!(Ingredients.length === 0 && Stepts.length === 0 && Category.length === 0 && Name==="" && Portions===0 && Preparation===0 && Description==="")){
@@ -93,7 +101,7 @@ function RecipieForm(props) {
     let payloadIngredients = [];
     for (const element of Ingredients ){
         
-        if(element.id === 0){
+        if(element.approved=== false){
         
         let Ingredientpayload = {
           name: element.name,
@@ -101,7 +109,6 @@ function RecipieForm(props) {
         }
 
         const response = await fetch(`http://localhost:3010/ingredient/create`, {
-        mode: 'no-cors',
         method: "POST",
         headers: {
           "Content-Type": "application/json",},

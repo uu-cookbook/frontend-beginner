@@ -13,11 +13,11 @@ import { useContext } from "react";
 
 function ModalRecipe(props) {
   const { canValidate } = useContext(UserContext);
-  console.log("recipie",props.recipe)
 
-  async function deleteRecipie(ID){
-    console.log("This is ID",ID)
-    const response = await fetch("http://localhost:3010/recipe/delete?id="+ID)
+  async function deleteRecipie(id){
+    console.log("THI IS RECIPIE",props.recipe)
+    console.log("This is ID",id)
+    const response = await fetch("http://localhost:3010/recipe/delete?id="+id)
     const jsonData = await response
     console.log("DELATION",jsonData)
     props.setShow(false)
@@ -57,7 +57,6 @@ function ModalRecipe(props) {
       </Modal.Header>:<></>}
 
         <Modal.Body >
-
           <div style={{textAlign: "right"}}>{canValidate()===false?<CloseButton onClick={() => props.setShow(false)} style={{align: "right"}}/>:<></>}</div>
           <Recipe recipe={props.recipe}/>
         </Modal.Body>
