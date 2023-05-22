@@ -9,15 +9,16 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import { mdiClockTimeFourOutline, mdiAccountMultiple } from "@mdi/js";
 
 //TODO
-//Portions number
+//Portions number function
 //Check portions and time
 //Check and fix ingredient css (Form)
-//Fix numbered list of steps
+//Check numbered list of steps
 
 //Category???
 //Checkbox strike???
 
 function Recipe(props) {
+    let i = 1
 return(
     <Row>
         <Stack gap ={4}>
@@ -27,11 +28,17 @@ return(
                 </Col>
                 <Col>
                     <h1>{props.recipe.name}</h1>
-                    <div style={{paddingBottom: "32%", border: "1px solid white"}}>
+                    <div style={{paddingBottom: "28%", border: "1px solid white", overflow: "hidden"}}rows="6" cols="50">
                         {props.recipe.description}
                     </div>
 
-                    <div style={{textAlign: "end"}}><Icon path={mdiAccountMultiple} size={1} />{props.recipe.portion} <Icon path={mdiClockTimeFourOutline} size={1} /> {props.recipe.preparationTime} min</div>
+                    <div style={{textAlign: "end"}}>
+                        <Icon path={mdiAccountMultiple} size={1} />&nbsp;
+                        <input class="input-number" type="number" placeholder={props.recipe.portion} min = {props.recipe.portion} step={props.recipe.portion}></input>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <Icon path={mdiClockTimeFourOutline} size={1} />&nbsp;
+                        {props.recipe.preparationTime}&nbsp; min&nbsp;&nbsp;
+                        <hr></hr>
+                    </div>
                    
                 </Col>
             </Row>
@@ -39,19 +46,11 @@ return(
                 <Col>
                     <h2>Steps:</h2>
                         {props.recipe.steps.map((element) => (
-                            <ListGroup numbered key={element} className="mb-1">                            
+                            <ListGroup key={element} className="mb-1">                            
                             
-                                 <ListGroup.Item>{element}</ListGroup.Item>
+                                 <ListGroup.Item>{i++ +". " +element + " "}</ListGroup.Item>
                             
                             </ListGroup>
-                        ))}
-                        
-                        {props.recipe.steps.map((element) => (
-                            <div key={element} className="mb-1">                            
-                            
-                                 <ol><li>{element}</li></ol>
-                            
-                            </div>
                         ))}
                 </Col>
                 <Col>
@@ -64,16 +63,13 @@ return(
                                     type={'checkbox'}
                                     label={`${element.name}`}
                                 />
-                                <Form.Text
-                                    class="recipe-text"
-                                    >
-                                        {element.amount} {element.unit}
+                                <Form.Text>
+                                    {element.amount} {element.unit}
                                  </Form.Text>     
                             </div>
                             ))}
                         </Form>
                 </Col>
-                <input class="form-control form-control-sm" type="text" placeholder=".form-control-sm" aria-label=".form-control-sm example"></input>
             </Row>
         </Stack>
     </Row>
