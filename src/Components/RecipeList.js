@@ -21,7 +21,7 @@ function RecipeList({listName, recipes, ingredients, categories}) {
       // CONVERT DATES FROM ISO TO DATE
       recipe.date = new Date(recipe.date);
 
-      // ADD INGREDIENT NAME AND UNIT
+      // JOIN INGREDIENT INFORMATION
       recipe.ingredients.forEach((recipeIngredient) => {
         console.log(recipeIngredient.id);
         let result = ingredients.filter(ingredient => {
@@ -31,6 +31,7 @@ function RecipeList({listName, recipes, ingredients, categories}) {
         if (result) {
           recipeIngredient.name = result[0].name;
           recipeIngredient.unit = result[0].unit;
+          recipeIngredient.approved = result[0].approved;
         }
       });
 
