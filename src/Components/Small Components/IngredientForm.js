@@ -228,6 +228,7 @@ function IngredientForm({
                 <Form.Control
                   placeholder="Enter quantity"
                   type="number"
+                  min="1"
                   onChange={(e) =>
                     AmountUpdate(element.componentId, e.target.value)
                   }
@@ -239,6 +240,7 @@ function IngredientForm({
                   <Form.Control
                     placeholder="unit"
                     type="text"
+                    min="1"
                     onChange={(e) =>
                       UnitNameUpdate(element.componentId, e.target.value)
                     }
