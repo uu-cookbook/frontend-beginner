@@ -5,7 +5,7 @@ import ModalRecipe from "./ModalRecipe";
 
 import NoImage from "../PlaceholderImages/no-image.jpg"
 import { useState } from "react";
-import { Recipes } from "./RecipeData";//PLACEHOLDER_DATA
+//import { Recipes } from "./RecipeData"; PLACEHOLDER_DATA
 
 function RecipeCard({recipe}) {
     const [showRecipe, setShowRecipe] = useState(false);
@@ -31,9 +31,9 @@ function RecipeCard({recipe}) {
                     <Card.Text style={{textAlign: "right"}}><Icon path={mdiShoePrint} size={1} /> {recipe.steps.length} <Icon path={mdiClockTimeFourOutline} size={1} /> {recipe.preparationTime} min</Card.Text>
                 </div>
                 <div className="mt-auto">
-                    <Card.Title >{recipe.name.length>20?"Recipe Name":`${recipe.name}`}</Card.Title>
+                    <Card.Title >{recipe.name.length>30?`${recipe.name.slice(0,31)}...`:`${recipe.name}`}</Card.Title>
                     <Card.Text className="mt-auto d-sm-block">
-                    {recipe.description.length>90?`${recipe.description.slice(0,91)}...`:`${recipe.description}`}
+                    {recipe.description.length>70?`${recipe.description.slice(0,71)}...`:`${recipe.description}`}
                     </Card.Text>
                 </div>
             </Card.ImgOverlay>
