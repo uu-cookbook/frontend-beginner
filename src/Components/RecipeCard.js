@@ -16,8 +16,6 @@ function RecipeCard({recipe, refresh}) {
         setShowRecipe(true);
     }
 
-    //console.log(`http://localhost:3010/image/get?image=${recipe.image}`)
-
     return (
         <div>
         <Card 

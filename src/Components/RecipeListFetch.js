@@ -1,6 +1,6 @@
 import RecipeList from "../Components/RecipeList";
 import useFetch from "../useFetch";
-import { Button, Container } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 
 function RecipeListFetch({listName, validationMode}) {
   const [recipes, recipesPending, recipesError, recipesRefresh] = useFetch('http://localhost:3010/recipe/list');
@@ -11,7 +11,6 @@ function RecipeListFetch({listName, validationMode}) {
     recipesRefresh();
     ingredientsRefresh();
     categoriesRefresh();
-    console.log("Oi")
   };
 
   let pendingFetchingData = false;
@@ -27,8 +26,6 @@ function RecipeListFetch({listName, validationMode}) {
 
   return (
     <div>
-      {/*<Button onClick={refreshData}>Refresh bracho</Button>*/}
-
       {pendingFetchingData && <div className="dots"></div>}
 
       {errorFetchingData && <Container>

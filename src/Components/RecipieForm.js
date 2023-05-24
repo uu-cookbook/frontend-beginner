@@ -333,9 +333,9 @@ const HandleSubmit = async (event) => {
       <Row>
         <Col>
           <Form.Group className="mb-3">
-            <Form.Label>Recipie Name</Form.Label>
+            <Form.Label>Recipe Name</Form.Label>
             <Form.Control
-              placeholder="Enter recipie name"
+              placeholder="Enter recipe name"
               onChange={(e) => setName(e.target.value)}
               value={Name}
               required
@@ -347,7 +347,7 @@ const HandleSubmit = async (event) => {
             <Form.Control
               as="textarea"
               rows={2}
-              placeholder="Enter a brief description of recipie"
+              placeholder="Enter a brief description of recipe"
               required
               onChange={(e) => setDescription(e.target.value)}
               value={Description}
@@ -355,7 +355,7 @@ const HandleSubmit = async (event) => {
           </Form.Group>
 
           <Form.Group className="mb-3">
-            <Form.Label>Recipie Image</Form.Label>
+            <Form.Label>Recipe Image</Form.Label>
             <Form.Control
               onChange={(e) => {
                 setFile(e.target.files);

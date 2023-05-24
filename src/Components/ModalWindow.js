@@ -41,9 +41,9 @@ function ModalWindow(proms) {
       >
         <Modal.Header closeButton>
           {proms.buttonname === "EDIT" ? (
-            <Modal.Title>Edit Recipie</Modal.Title>
+            <Modal.Title>Edit Recipe</Modal.Title>
           ) : (
-            <Modal.Title>Create Recipie</Modal.Title>
+            <Modal.Title>Create Recipe</Modal.Title>
           )}
         </Modal.Header>
         <Modal.Body>
@@ -92,10 +92,10 @@ function ModalWindow(proms) {
         centered
       >
         <Modal.Header closeButton>
-          <Modal.Title>Conformation</Modal.Title>
+          <Modal.Title>Confirmation</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          Are you shure you want to exit thr window ?
+          Are you sure you want to exit the window?
           <div>All changes will be lost.</div>
         </Modal.Body>
 
