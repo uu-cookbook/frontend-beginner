@@ -5,7 +5,12 @@ const useFetch = (url) => {
     const [isPending, setIsPending] = useState(true);
     const [error, setError] = useState(null);
 
-    useEffect(() => {
+    const refresh = () => {
+        console.log("REFRESH!!");
+        fetchData(url);
+    };
+
+    const fetchData = (url) => {
         const abortCont = new AbortController();
 
         fetch(url, { signal: abortCont.signal})
@@ -30,9 +35,13 @@ const useFetch = (url) => {
             })
         
         return () => abortCont.abort();
+    };
+
+    useEffect(() => {
+        fetchData(url);
     }, [url]);
 
-    return [data, isPending, error];
+    return [data, isPending, error, refresh];
 }
 
 export default useFetch;

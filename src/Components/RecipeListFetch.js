@@ -1,13 +1,24 @@
 import RecipeList from "../Components/RecipeList";
 import useFetch from "../useFetch";
-import { Container } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 
 function RecipeListFetch({listName, validationMode}) {
-  const [recipes, recipesPending, recipesError] = useFetch('http://localhost:3010/recipe/list');
-  const [ingredients, ingredientsPending, ingredientsError] = useFetch('http://localhost:3010/ingredient/list');
-  const [categories, categoriesPending, categoriesError] = useFetch('http://localhost:3010/category/list');
+  const [recipes, recipesPending, recipesError, recipesRefresh] = useFetch('http://localhost:3010/recipe/list');
+  const [ingredients, ingredientsPending, ingredientsError, ingredientsRefresh] = useFetch('http://localhost:3010/ingredient/list');
+  const [categories, categoriesPending, categoriesError, categoriesRefresh] = useFetch('http://localhost:3010/category/list');
 
+  const refreshData = () => {
+    recipesRefresh();
+    ingredientsRefresh();
+    categoriesRefresh();
+  };
+
+  let pendingFetchingData = false;
   let errorFetchingData = false;
+
+  if (recipesPending || ingredientsPending || categoriesPending) {
+    pendingFetchingData = true;
+  }
 
   if (recipesError || ingredientsError || categoriesError) {
     errorFetchingData = true;
@@ -15,7 +26,9 @@ function RecipeListFetch({listName, validationMode}) {
 
   return (
     <div>
-      {recipesPending && ingredientsPending && categoriesPending && <div className="dots"></div>}
+      {/*<Button onClick={refreshData}>Refresh bracho</Button>*/}
+
+      {pendingFetchingData && <div className="dots"></div>}
 
       {errorFetchingData && <Container>
         <h2 style={{color: "gray", textAlign: "center"}}>Failed to fetch data.</h2>
@@ -24,7 +37,7 @@ function RecipeListFetch({listName, validationMode}) {
         {categoriesError && <p style={{color: "gray", textAlign: "center"}}>Categories: {ingredientsError}</p>}
       </Container>}
       
-      {recipes && ingredients && categories && <RecipeList
+      {!pendingFetchingData && !errorFetchingData && recipes && ingredients && categories && <RecipeList
         ingredients={ingredients.filter(ingredient => {
           if (validationMode) {
             return true;
@@ -38,6 +51,7 @@ function RecipeListFetch({listName, validationMode}) {
         })}
         categories={categories}
         listName={listName}
+        refresh={refreshData}
         />}
     </div>
   );

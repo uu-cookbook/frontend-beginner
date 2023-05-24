@@ -7,7 +7,7 @@ import NoImage from "../PlaceholderImages/no-image.jpg"
 import { useState } from "react";
 //import { Recipes } from "./RecipeData"; PLACEHOLDER_DATA
 
-function RecipeCard({recipe}) {
+function RecipeCard({recipe, refresh}) {
     const [showRecipe, setShowRecipe] = useState(false);
 
     const handleClick = (e) => {

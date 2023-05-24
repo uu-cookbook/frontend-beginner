@@ -6,13 +6,15 @@ import Select from "react-select"
 import RecipeCard from "./RecipeCard";
 import { useState, useRef, useEffect } from "react";
 
-function RecipeList({listName, recipes, ingredients, categories}) {
+function RecipeList({listName, recipes, ingredients, categories, refresh}) {
   let currentSearch = useRef("");
   let currentSort = useRef("");
   let currentCategoryFilters = useRef([]);
   let currentIngredientFilters = useRef([]);
 
   const [searchedRecipes, setSearchedRecipes] = useState(recipes);
+
+  console.log(recipes);
 
   useEffect(() => {
     // THINGS HAPPENING ONLY ON FIRST RENDER BELOW
@@ -56,6 +58,8 @@ function RecipeList({listName, recipes, ingredients, categories}) {
       delete category.name;
       delete category.id;
     });
+
+    updateSearch();
   }, [recipes, ingredients, categories]);
 
   const handleSearch = (e) => {
@@ -211,7 +215,7 @@ function RecipeList({listName, recipes, ingredients, categories}) {
             {searchedRecipes.length > 0 && <Row className="card-row">
                 {searchedRecipes.map((recipe) => (
                     <Col sm={12} md={12} lg={6} xl={4} key={recipe.name} className="card-col">
-                        <RecipeCard recipe={recipe} />
+                        <RecipeCard recipe={recipe} refresh={refresh} />
                         <br/>
                     </Col>
                 ))}
