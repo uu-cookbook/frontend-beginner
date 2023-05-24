@@ -11,6 +11,7 @@ function RecipeListFetch({listName, validationMode}) {
     recipesRefresh();
     ingredientsRefresh();
     categoriesRefresh();
+    console.log("Oi")
   };
 
   let pendingFetchingData = false;

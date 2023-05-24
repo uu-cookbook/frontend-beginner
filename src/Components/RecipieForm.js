@@ -218,6 +218,7 @@ const HandleSubmit = async (event) => {
       })
       if(res.ok){
         console.log("eddit ok")
+        props.refresh()
       }
       else{
         console.error('Failed to update recipie');
@@ -242,6 +243,7 @@ const HandleSubmit = async (event) => {
         if (img.ok) {
           // File upload successful
           console.log("File uploaded successfully");
+          props.refresh()
           props.setbuttonIsLoading(false);
           props.setShow(false); //close modal
         } else {
@@ -312,6 +314,11 @@ const HandleSubmit = async (event) => {
     } else {
       console.log({ state: "success", data });
       props.setShow(false); //close modal
+      
+      if(props.edditMode===true){
+        props.refresh()
+      }
+      props.setbuttonIsLoading(false);
       props.setAlertShow(true);
     }
   };

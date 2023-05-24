@@ -12,7 +12,7 @@ function ModalWindow(proms) {
 
   const [isFormEddited, setFormEddited] = useState(false);
   const [buttonIsLoading, setbuttonIsLoading] = useState(false);
-
+  
   const handleClose = () => {
     if (isFormEddited) {
       setShowConfirm(true);
@@ -54,6 +54,7 @@ function ModalWindow(proms) {
             inputData={proms.inputData}
             edditMode={proms.buttonname === "EDIT"}
             setbuttonIsLoading={setbuttonIsLoading}
+            refresh={proms.refresh}
           />
         </Modal.Body>
         <Modal.Footer>

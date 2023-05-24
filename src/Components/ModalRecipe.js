@@ -28,6 +28,7 @@ function ModalRecipe(props) {
     const jsonData = await response
     console.log("DELATION",jsonData)
     props.setShow(false)
+    props.refresh()
   }
 
   async function acceptRecipie(ID){  
@@ -64,6 +65,7 @@ function ModalRecipe(props) {
           const jsonData2 = await response2.json();
           console.log(jsonData2);
     props.setShow(false)
+    props.refresh()
   }
 
   return (
@@ -88,7 +90,7 @@ function ModalRecipe(props) {
         
         {canValidate()?
         <Modal.Footer>
-        <Button variant="primary"><ModalWindow buttonname="EDIT" inputData={props.recipe}/></Button>
+        <Button variant="primary"><ModalWindow refresh={props.refresh} buttonname="EDIT" inputData={props.recipe}/></Button>
         <Button variant="danger" onClick={()=>deleteRecipie(props.recipe.id)}>DELETE</Button>
         {props.recipe.approved===false?<Button variant="success" onClick={()=>acceptRecipie(props.recipe.id)}>ACCEPT RECIPIE</Button>:<></>}
         </Modal.Footer>:<></>}

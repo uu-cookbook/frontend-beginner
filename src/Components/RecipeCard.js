@@ -38,7 +38,7 @@ function RecipeCard({recipe, refresh}) {
                 </div>
             </Card.ImgOverlay>
         </Card>
-        <ModalRecipe show={showRecipe} setShow={setShowRecipe} recipe={recipe}/>
+        <ModalRecipe refresh={refresh} show={showRecipe} setShow={setShowRecipe} recipe={recipe}/>
         </div>
     );
 }
