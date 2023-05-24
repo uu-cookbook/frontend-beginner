@@ -80,7 +80,7 @@ function ModalRecipe(props) {
       >  
       {canValidate()===true?     
       <Modal.Header closeButton>
-          <Modal.Title>Recipie</Modal.Title>
+          <Modal.Title>Recipe</Modal.Title>
       </Modal.Header>:<></>}
 
         <Modal.Body >
@@ -92,7 +92,7 @@ function ModalRecipe(props) {
         <Modal.Footer>
         <Button variant="primary"><ModalWindow refresh={props.refresh} buttonname="EDIT" inputData={props.recipe}/></Button>
         <Button variant="danger" onClick={()=>deleteRecipie(props.recipe.id)}>DELETE</Button>
-        {props.recipe.approved===false?<Button variant="success" onClick={()=>acceptRecipie(props.recipe.id)}>ACCEPT RECIPIE</Button>:<></>}
+        {props.recipe.approved===false?<Button variant="success" onClick={()=>acceptRecipie(props.recipe.id)}>ACCEPT</Button>:<></>}
         </Modal.Footer>:<></>}
       </Modal>
     </>
