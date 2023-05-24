@@ -1,13 +1,15 @@
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import Row from 'react-bootstrap/Row';
-//import Badge from 'react-bootstrap/Badge'; //Category window
+import Badge from 'react-bootstrap/Badge'; //Category window
 import Stack from 'react-bootstrap/Stack';
 import Form from 'react-bootstrap/Form';
 import Icon from "@mdi/react";
 import ListGroup from 'react-bootstrap/ListGroup';
 import { mdiClockTimeFourOutline, mdiAccountMultiple } from "@mdi/js";
 import { useState } from "react";
+import NoImage from "../PlaceholderImages/no-image.jpg";
+import { Tab } from 'react-bootstrap';
 
 //TODO
 //Portions number function
@@ -28,11 +30,15 @@ return(
         <Stack gap ={4}>
             <Row>
                 <Col>
-                    <Image src={`http://localhost:3010/image/get?image=${props.recipe.image}`} style={{width: "100%",  width: "100%", height: "305px", objectFit: "cover"}} rounded alt="Recipe Image" />
+                    <Image src={props.recipe.image ? `http://localhost:3010/recipe_images/${props.recipe.image}` : NoImage} style={{width: "100%",  width: "100%", height: "305px", objectFit: "cover"}} rounded alt="Recipe Image" />
+                    <Row inline >{props.recipe./* category */categoryId.map((element) => (
+                        <Col> <div style={{color: "white", fontWeight:"blod",textTransform: "uppercase", fontSize: "12px",backgroundColor: "green", border: "3px solid white",whiteSpace: "nowrap", borderRadius: "6px", padding: "1px 9px 2px 9px"}} /* {element.color} */>{element/* .name */}</div></Col>
+                        //<Badge bg="secondary">{element/* .name */}</Badge>
+                    ))}</Row>
                 </Col>
                 <Col>
                     <h1>{props.recipe.name}</h1>
-                    <div style={{blockSize: "200px", border: "1px solid white", overflow: "hidden"}}rows="6" cols="50">
+                    <div style={{blockSize: "200px", border: "1px solid white", overflow: "auto"}}rows="6" cols="50">
                         {props.recipe.description}
                     </div>
 

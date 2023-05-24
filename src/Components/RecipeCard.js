@@ -31,9 +31,9 @@ function RecipeCard({recipe}) {
                     <Card.Text style={{textAlign: "right"}}><Icon path={mdiShoePrint} size={1} /> {recipe.steps.length} <Icon path={mdiClockTimeFourOutline} size={1} /> {recipe.preparationTime} min</Card.Text>
                 </div>
                 <div className="mt-auto">
-                    <Card.Title >{recipe.name}</Card.Title>
+                    <Card.Title >{recipe.name.length>20?"Recipe Name":`${recipe.name}`}</Card.Title>
                     <Card.Text className="mt-auto d-sm-block">
-                    {recipe.description}
+                    {recipe.description.length>90?`${recipe.description.slice(0,91)}...`:`${recipe.description}`}
                     </Card.Text>
                 </div>
             </Card.ImgOverlay>
