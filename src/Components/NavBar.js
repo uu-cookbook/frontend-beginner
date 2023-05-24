@@ -57,7 +57,7 @@ function NavBar() {
   return (
     <div>
       <div
-        style={{ position: "absolute", zIndex: "1" }}
+        style={{ position: "absolute", zIndex: "15" }}
         className="mt-4 position-absolute top-0 start-50 translate-middle-x w-50 mb-0">
         <Alert show={AlertShow} variant="success">
         
@@ -73,7 +73,7 @@ function NavBar() {
         </Alert>
       </div>
 
-      <div style={{ position: "relative", zIndex: "0" }}>
+      <div style={{ position: "relative", zIndex: "10" }}>
         <Navbar bg="light" variant="light">
           <Container>
             <Navbar.Brand as={NavLink} to="/" className="d-flex flex-row">
