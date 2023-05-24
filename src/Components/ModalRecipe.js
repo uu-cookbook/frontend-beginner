@@ -33,6 +33,7 @@ function ModalRecipe(props) {
   async function acceptRecipie(ID){  
     /// accept ingredients
     const unaproved = props.recipe.ingredients.filter((element)=>element.approved===false)
+    
     unaproved.forEach(element => {
       element.approved = true
     });

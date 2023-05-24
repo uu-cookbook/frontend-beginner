@@ -143,6 +143,16 @@ function IngredientForm({
     });
   }
 
+  function changeOnlyIngredientName(componentId, e){
+    const index = Ingredients.findIndex(
+      (obj) => obj.componentId === componentId
+    );
+    setIngredient(()=>{
+      Ingredients[index].name=e
+      return [...Ingredients]
+    })
+  }
+
   //CREATE OPTION
   function CreateOption(componentId, text) {
     //const genIngredientID = crypto.randomUUID()
@@ -162,7 +172,7 @@ function IngredientForm({
     const genID = crypto.randomUUID();
     setIngredient([
       ...Ingredients,
-      { componentId: genID, name: "", id: ""},
+      { componentId: genID, name: "", id: "", approved: true},
     ]);
   }
 
@@ -209,15 +219,23 @@ function IngredientForm({
   function ChangeCategory(e) {
     setCategory([...e]);
   }
-
+  
   return (
     <div>
       <Form.Label>Ingredients</Form.Label>
 
       {Ingredients.map((element) => {
         return (
-          <Row className="mt-3 mb-3" key={element.componentId} style={element.approved===false?{backgroundColor: "#e5425540"}:null}>
-            <Col style={{columnRuleColor: "red"}}>
+          <Row className="mt-3 mb-3" key={element.componentId} style={element.approved===false&&edditMode?{backgroundColor: "#e5425540"}:null}>
+            <Col>
+            {element.approved===false&&edditMode?
+                <Form.Control
+                  placeholder="Enter ingredient name"
+                  type="text"
+                  onChange={(e) => changeOnlyIngredientName(element.componentId, e.target.value)}
+                  value={element.name}
+                  required
+                />:
               <CreatableSelect
                 isClearable
                 backspaceRemovesValue={true}
@@ -231,7 +249,8 @@ function IngredientForm({
                 value={element.name === "" ? null : element}
                 styles={CustomStyleValdiation(validation,element.name)}
                 require
-              />
+              />}
+
             </Col>
 
             <Col>

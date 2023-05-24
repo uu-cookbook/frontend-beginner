@@ -2,7 +2,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Nav from "react-bootstrap/Nav";
 import { useState } from "react";
-
+import Spinner from "react-bootstrap/Spinner";
 // COMPONENTS
 import RecipieForm from "./RecipieForm";
 
@@ -11,18 +11,19 @@ function ModalWindow(proms) {
   const [showConfirm, setShowConfirm] = useState(false);
 
   const [isFormEddited, setFormEddited] = useState(false);
+  const [buttonIsLoading, setbuttonIsLoading] = useState(false);
 
   const handleClose = () => {
-    if(isFormEddited){
-      setShowConfirm(true)
-     return setShow(true)
+    if (isFormEddited) {
+      setShowConfirm(true);
+      return setShow(true);
     }
-    return setShow(false)
+    return setShow(false);
   };
 
   const handleConfirmClose = () => {
-    setShowConfirm(false)
-  }
+    setShowConfirm(false);
+  };
 
   const handleShow = () => setShow(true);
 
@@ -39,16 +40,46 @@ function ModalWindow(proms) {
         centered
       >
         <Modal.Header closeButton>
-        {proms.buttonname==="EDIT"?<Modal.Title>Edit Recipie</Modal.Title>:<Modal.Title>Create Recipie</Modal.Title>}
-          
+          {proms.buttonname === "EDIT" ? (
+            <Modal.Title>Edit Recipie</Modal.Title>
+          ) : (
+            <Modal.Title>Create Recipie</Modal.Title>
+          )}
         </Modal.Header>
         <Modal.Body>
-
-          <RecipieForm setAlertShow={()=>proms.setAlertShow()}setFormEddited={setFormEddited} setShow={setShow} inputData={proms.inputData} edditMode={proms.buttonname==="EDIT"}/>
-
+          <RecipieForm
+            setAlertShow={() => proms.setAlertShow()}
+            setFormEddited={setFormEddited}
+            setShow={setShow}
+            inputData={proms.inputData}
+            edditMode={proms.buttonname === "EDIT"}
+            setbuttonIsLoading={setbuttonIsLoading}
+          />
         </Modal.Body>
         <Modal.Footer>
-        {proms.buttonname==="EDIT"?<Button variant="primary" type='submit' form='my-form'>SAVE CHANGES</Button>:<Button variant="primary"  type='submit' form='my-form'>Publish</Button>}
+          {proms.buttonname === "EDIT" ? (
+            <Button variant="primary" type="submit" disabled={buttonIsLoading} form="my-form">
+              {buttonIsLoading?<Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />:<></>}
+              SAVE CHANGES
+            </Button>
+          ) : (
+            <Button variant="primary" type="submit" form="my-form" disabled={buttonIsLoading}>
+              {buttonIsLoading?<Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />:<></>}
+              Publish
+            </Button>
+          )}
         </Modal.Footer>
       </Modal>
 
@@ -67,18 +98,21 @@ function ModalWindow(proms) {
           <div>All changes will be lost.</div>
         </Modal.Body>
 
-
-
         <Modal.Footer>
-          <Button variant="secondary" onClick={()=>{setShow(false)
-            setShowConfirm(false)}}>Yes, I want to leave</Button><Button variant="primary" onClick={()=>setShowConfirm(false)}>No, I want to stay</Button>
+          <Button
+            variant="secondary"
+            onClick={() => {
+              setShow(false);
+              setShowConfirm(false);
+            }}
+          >
+            Yes, I want to leave
+          </Button>
+          <Button variant="primary" onClick={() => setShowConfirm(false)}>
+            No, I want to stay
+          </Button>
         </Modal.Footer>
       </Modal>
-
-
-
-
-
     </>
   );
 }
